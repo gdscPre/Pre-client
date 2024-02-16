@@ -1,0 +1,23 @@
+.btn-box {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.btn-box button {
+  padding: 10px 20px;
+  background-color: #D14D72;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-bottom: 2vh;
+  width: 100%;
+}
+.btn-box button span {
+  color: #fff;
+}
+
+

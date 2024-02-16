@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  width: 90%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.container .banner {
+  width: 100%;
+  display: flex;
+  height: 10vh;
+  align-items: flex-starts;
+}
+.container .register-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10vw;
+}
+
+.register-box .input-box {
+}
+
+.input-box input {
+  outline: none;
+  border: none;
+  background-color: #FFECEF;
+  width: 80%;
+  height: 4.5vh;
+  border-radius: 5px;
+  margin-right: 3vw;
+  padding: 3vw;
+}
+.container .register-btn {
+
+  padding: 2vh 10vw;
+  background-color: #D14D72;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 1vh 0vh;
+  width: 100%;
+}
+.register-btn>span {
+  color: #fff;
+  font-size: 1.3em;
+}

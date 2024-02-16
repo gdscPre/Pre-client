@@ -1,0 +1,136 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  width: 90%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.container .banner {
+  width: 100%;
+  display: flex;
+  height: 10vh;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.banner .back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  order: -1;
+  font-size: 1.5em;
+}
+
+.banner h3 {
+  margin-left: 10px;
+  margin: 0 auto; 
+  font-size: 1.6em;
+  font-weight: 400;
+}
+
+.container .search-box {
+  margin-top: 1vh;
+  display: flex;
+  align-items: center;
+  padding: 2vw;
+  background-color: #F8F3F4;
+  border-radius: 5px;
+  font-size: 0.8em;
+  height: 6vh;
+  width: 100%;
+  border-radius: 30px;
+}
+.search-box svg {
+  font-size: 2em;
+  margin-right: 10px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  width: 80vw;
+  font-size: 1.3em;
+  color: #9D9D9D;
+}
+.container .food-list {
+  margin-top: 20px;
+  border-radius: 5px;
+  min-height: 100px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.food-list .food {
+  background-color: 
+  #FFECEF;
+  box-sizing: border-box;
+  height: 12vh;
+  padding: 1vw 1vh;
+  margin-bottom: 2vh;
+  border-radius: 10px;
+}
+
+
+.food .food-top {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  padding-left: 3vw;
+}
+.food-top svg {
+  font-size: 2em;
+  color: #9D9D9D;
+  /* 이거 왜 안 먹는데? */
+}
+
+.food .nutrition-info {
+  display: flex;
+  justify-content: space-evenly;
+  font-weight: 100;
+  color: #9D9D9D;
+}
+.container .btn-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  height: 20vh;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0px;
+  
+}
+
+.btn-box button {
+
+  padding: 2vh 10vw;
+  background-color: #D14D72;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 1vh 0vh;
+  width: 100%;
+}
+.btn-box button span {
+  color: #fff;
+  font-size: 1.3em;
+}
+
+.btn-box .link-view {
+  width: 100%;
+  height: 0.2vh;
+  background-color: #FCC8D1;
+}
+
+

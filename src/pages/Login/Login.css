@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansita:ital,wght@1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container h1 {
+  font-family: 'Sansita', sans-serif;
+  color: #D14D72;
+  font-size: 7em;
+}
+.input {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.email-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3vh;
+  width: 16rem;
+}
+.email-input .errorMessageWrap span {
+  color: #D14D72;
+  font-size: 0.7rem;
+}
+.email-input span {
+  font-size: 0.8rem;
+  color: #333D42;
+  margin-bottom: 0.5em;
+  margin-left: 0.8em;
+}
+.email-input input {
+  height: 4.5vh;
+  background-color: #FFF7F8;
+  border: 1px solid #333D42;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.password-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6vh;
+}
+.password-input .errorMessageWrap span {
+  color: #D14D72;
+  font-size: 0.7rem;
+}
+.password-input span {
+  font-size: 0.8rem;
+  color: #333D42;
+  margin-bottom: 0.5em;
+  margin-left: 0.8em;
+}
+.password-input input {
+  height: 4.5vh;
+  background-color: #FFF7F8;
+  border: 1px solid #333D42;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#login-button {
+  color: #fff;
+  background-color: #D14D72;
+  border: 0;
+  width: 12rem;
+  height: 4vh;
+  border-radius: 20px;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+.button hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid #FCC8D1;
+  width: 16rem;
+  margin: 2vh 0vh;
+}
+#register-button {
+  color: #D14D72;
+  background-color: #fff;
+  border: 1px solid #D14D72;
+  width: 12rem;
+  height: 4vh;
+  border-radius: 20px;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+#login-button:disabled {
+  color: #D14D72;
+  background-color: #fff;
+  border: 1px solid #D14D72;
+}
