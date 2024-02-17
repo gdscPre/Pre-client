@@ -1,9 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function Analysis() {
-  return (
-    <div>
-      analysis
-    </div>
-  )
+  return <div>analysis</div>;
 }
