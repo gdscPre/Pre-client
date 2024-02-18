@@ -1,0 +1,82 @@
+.banner {
+  justify-content: space-between;
+  align-items: center;
+}
+.banner .check-banner {
+  font-size: 1.2em;
+  text-align: center;
+  flex-grow: 1;
+  font-weight: 400;
+  margin: 0;
+}
+.container .date-selected {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  padding-left: 5vw;
+}
+.container .calendar-days {
+  display: flex;
+  margin-bottom: 5vh;
+}
+.calendar-days .btn-calendar {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.calendar-days .day-box {
+  width: 13vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.day-box .week {
+  font-size: 1em;
+  font-weight: 200;
+  margin-bottom: 0.7vh;
+}
+.day-box .day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10vw;
+  height: 10vw;
+}
+.day-box .selected {
+  background-color: #D14D72;
+  border-radius: 50%;
+  color: #FFF;
+}
+
+.container .supplement-list {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   height: 60vh;
+}
+.supplement-list .supplement-box {
+  width: 100%;
+  font-size: 1.8em;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  border: 2px solid #BABABA;
+  border-radius: 10px;
+  margin-bottom: 3vh;
+  padding: 0vw 5vw;
+  cursor: pointer;
+}
+.supplement-box>svg {
+  margin-right: 3vw;
+}
+.supplement-list .selected-box {
+  background-color: #FEE7EB;
+}
+.selected-box>svg {
+  color: #E17593; 
+}
+.selected-box>span {
+  color: #E17593;
+}
+

@@ -1,0 +1,116 @@
+
+
+.container .date-selected {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  padding-left: 5vw;
+}
+.container .calendar-days {
+  display: flex;
+  margin-bottom: 5vh;
+}
+.calendar-days .btn-calendar {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.calendar-days .day-box {
+  width: 13vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.day-box .week {
+  font-size: 1em;
+  font-weight: 200;
+  margin-bottom: 0.7vh;
+}
+.day-box .day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10vw;
+  height: 10vw;
+  max-width: 150px;
+  max-height: 150px;
+}
+.day-box .selected {
+  background-color: #D14D72;
+  border-radius: 50%;
+  color: #FFF;
+}
+
+.container .analysis-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  overflow: scroll;
+}
+.analysis-box .kcal-box, .carbohydrate-box, .protein-box {
+  display: flex;
+  width: 80%;
+  height: 15vh;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2vh;
+}
+
+.box-top {
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  height: 4vh;
+}
+.box-top .nutri-state {
+  background-color: #FF0000;
+  width: 10vw;
+  max-width: 50px;
+  color: #FFF;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 0.9em;
+  padding: 0.3vw;
+}
+.piechart {
+  width: 25vw;
+  max-width: 150px;
+}
+
+#line {
+  margin: 2vh 0;
+  width: 100%;
+  background-color: #FCC8D1;
+  height: 1px;
+}
+.container .diet-list {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: scroll;
+}
+.diet-list .diet-banner {
+  display: flex;
+  width: 100%;
+}
+.diet-list .food-box {
+  display: flex;
+  width: 100%;
+  height: 5vh;
+  background-color: #FFECEF;
+  margin: 1vh 0;
+  border-radius: 10px;
+}
+.row {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.food-name {
+  font-weight: 600;
+}

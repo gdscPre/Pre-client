@@ -175,6 +175,8 @@ body {
   margin-left: 5vw;
   width: 8vw;
   height: 8vw;
+  max-width: 40px;
+  max-height: 40px;
   background-color: #FFA8B9;
   border: none;
   outline: none;

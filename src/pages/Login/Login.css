@@ -8,10 +8,11 @@
   flex-direction: column;
   align-items: center;
 }
-.container h1 {
-  font-family: 'Sansita', sans-serif;
-  color: #D14D72;
-  font-size: 7em;
+.container #logo {
+  margin: 10vh auto 8vh auto;
+  width: 50vw;
+  max-width: 200px;
+  
 }
 .input {
   font-family: "Noto Sans KR", sans-serif;

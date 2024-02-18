@@ -7,18 +7,27 @@ import Analysis from './pages/Analysis/Analysis';
 import Register from './pages/Register/Register';
 import Supplement from './pages/Supplement/Supplement';
 import RegisterOwn from './pages/Register/RegisterOwn';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 function App() {
+
+  //서버 데이터 console 로 확인
+  // useEffect(() => {
+  //   axios.get('/api/test')
+  //     .then(res => console.log(res))
+  //     .catch()
+  // })
   return (
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login/>} />
-          <Route path="/" element={<Main/>} />
-          <Route path="/signup" element={<Signup/>} />
-          <Route path='/analysis' element={<Analysis/>} />
-          <Route path='/register' element={<Register />} />
+          <Route path="/users/login" element={<Login/>} />
+          <Route path="/main" element={<Main/>} />
+          <Route path="/users/join" element={<Signup/>} />
+          <Route path='/diet/analysis' element={<Analysis/>} />
+          <Route path='/diet/list' element={<Register />} />
           <Route path='/supplement' element={<Supplement/>} />
-          <Route path='/register/own' element={<RegisterOwn />} />
+          <Route path='/diet/record' element={<RegisterOwn />} />
           <Route path='/*' element={<Main />} />
         </Routes>
       </BrowserRouter>
