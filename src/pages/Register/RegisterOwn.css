@@ -15,7 +15,7 @@ body {
 }
 
 .container .banner {
-  width: 100%;
+  width: 100vw;
   display: flex;
   height: 10vh;
   align-items: flex-starts;
@@ -27,8 +27,6 @@ body {
   padding: 10vw;
 }
 
-.register-box .input-box {
-}
 
 .input-box input {
   outline: none;

@@ -15,7 +15,7 @@ body {
 }
 
 .container .banner {
-  width: 100%;
+  width: 100vw;
   display: flex;
   height: 10vh;
   align-items: center;
@@ -31,11 +31,13 @@ body {
 }
 
 .banner h3 {
-  margin-left: 10px;
-  margin: 0 auto; 
-  font-size: 1.6em;
+  font-size: 1.2em;
+  text-align: center;
+  flex-grow: 1;
   font-weight: 400;
+  margin: 0;
 }
+
 
 .container .search-box {
   margin-top: 1vh;
@@ -67,7 +69,8 @@ body {
   border-radius: 5px;
   min-height: 100px;
   width: 100%;
-  overflow-y: auto;
+  overflow: scroll;
+  
 }
 
 .food-list .food {
@@ -87,10 +90,11 @@ body {
   align-items: center;
   padding-left: 3vw;
 }
-.food-top svg {
+.food-top .plus-btn {
   font-size: 2em;
   color: #9D9D9D;
   /* 이거 왜 안 먹는데? */
+  cursor: pointer;
 }
 
 .food .nutrition-info {
@@ -106,8 +110,7 @@ body {
   width: 90%;
   height: 20vh;
   background-color: #fff;
-  position: fixed;
-  bottom: 0px;
+
   
 }
 

@@ -1,5 +1,9 @@
-import React from 'react';
-
+import React from "react";
+import Example3 from "../../Example3";
 export default function Signup() {
-  return <div className="">signup page</div>;
+  return (
+    <div className="">
+      <Example3 />
+    </div>
+  );
 }
