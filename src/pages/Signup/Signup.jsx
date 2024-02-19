@@ -128,6 +128,10 @@ const Register = () => {
 
   // 영양제 삭제
   const handleRemoveSupplement = id => {
+    if (supplements.length === 1) {
+      // 최소한 영양제 하나는 존재하도록
+      return;
+    }
     const updatedSupplements = supplements.filter(supplement => supplement.id !== id);
     setSupplements(updatedSupplements);
   };
@@ -269,7 +273,7 @@ const Register = () => {
                         name={`supplement_${supplement.id}`}
                         label={`영양제 ${supplement.id}`}
                         error={false}
-                        sx={{ width: '91%' }}
+                        sx={{ width: '88%' }}
                       />
                       <IconButton
                         color="secondary"
