@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 export default class Example3 extends React.Component {
   state = {
-    text: "",
+    text: '',
   };
 
-  handlChange = (e) => {
+  handlChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -15,20 +15,20 @@ export default class Example3 extends React.Component {
     const textbox = {
       inText: this.state.text,
     };
-    fetch("http://localhost:3001/text", {
-    method: "post",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(textbox),
-   })
-   .then((res) => res.json())
-   .then((json) => {
-    console.log(json);
-    this.setState({
-      text: json.text,
-    });
-   });
+    fetch('http://localhost:3001/text', {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(textbox),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        this.setState({
+          text: json.text,
+        });
+      });
   };
 
   render() {
