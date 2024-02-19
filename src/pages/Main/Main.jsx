@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import './Main.css';
-import { HiArrowRight } from "react-icons/hi2";
-import { PiPillBold } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
+import { HiArrowRight } from 'react-icons/hi2';
+import { PiPillBold } from 'react-icons/pi';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Main() {
   const navigate = useNavigate();
 
   const today = new Date();
-  //년도
+  // 년도
   const year = today.getFullYear();
   const month = today.getMonth() + 1;
   const day = today.getDate();
@@ -18,18 +17,17 @@ export default function Main() {
   const supplementList = ['약1', '약2', '약3', '약4', '약5'];
   const pregnantWeek = 14;
 
-  const formattedDate = `${year}년 ${month}월 
-  ${day}일`;
+  const formattedDate = `${year}년 ${month}월 ${day}일`;
 
-  const [users, setUsers] = useState(null); //결과값
-  const [loading, setLoading] = useState(false); //로딩 여부
-  const [error, setError] = useState(null); //에러
+  const [users, setUsers] = useState(null); // 결과값
+  const [loading, setLoading] = useState(false); // 로딩 여부
+  const [error, setError] = useState(null); // 에러
 
   const fetchUsers = async () => {
     try {
       setUsers(null);
       setError(null);
-      setLoading(true); //로딩 시작
+      setLoading(true); // 로딩 시작
       const response = await axios.get('https://jsonplaceholder.typicode.com/users/');
       setUsers(response.data);
     } catch (error) {
@@ -38,25 +36,24 @@ export default function Main() {
     setLoading(false);
   };
 
-  useEffect( () => {
+  useEffect(() => {
     fetchUsers();
-  }, [])
+  }, []);
 
-
-  if( loading ) return <div>로딩중...</div>
-  if( error ) return <div>에러 발생!!</div>
-  if( !users ) return null; //user 값 유효하지 않은 경우
+  if (loading) return <div>로딩중...</div>;
+  if (error) return <div>에러 발생!!</div>;
+  if (!users) return null; // user 값 유효하지 않은 경우
 
   const onClickAnalysisBtn = () => {
-    navigate("/diet/analysis");
+    navigate('/diet/analysis');
   };
 
   const onClickRegisterNutritionBtn = () => {
-    navigate("/diet/list");
+    navigate('/diet/list');
   };
 
   const onClickSupplementsBtn = () => {
-    navigate("/supplement");
+    navigate('/supplement');
   };
   return (
     <div className="container">
@@ -69,7 +66,7 @@ export default function Main() {
             <div id="name">{users[3].username} </div>
             <div className="">만나기까지</div>
           </div>
-          
+
           <div className="d-day-date">179일</div>
           <span>(14주 3일째)</span>
         </div>
@@ -78,7 +75,9 @@ export default function Main() {
       <div className="diet-analysis">
         <div className="analysis">
           <span>식단 분석</span>
-          <button onClick={onClickAnalysisBtn}><HiArrowRight /></button>
+          <button onClick={onClickAnalysisBtn}>
+            <HiArrowRight />
+          </button>
         </div>
         <button onClick={onClickRegisterNutritionBtn} id="record-nutrition-btn">
           <span>식단 기록하기</span>
@@ -88,7 +87,9 @@ export default function Main() {
       <div className="nutritional-supplements">
         <div className="supplements-top">
           <span>영양제</span>
-          <button onClick={onClickSupplementsBtn}><HiArrowRight /></button>
+          <button onClick={onClickSupplementsBtn}>
+            <HiArrowRight />
+          </button>
         </div>
         <div className="nutritional-status">
           <div className="status-remind">
