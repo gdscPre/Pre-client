@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가운데 정렬을 위해 추가 */
+
+  max-width: 600px;
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*(user name)*/
+header {
+  margin-top: 3vh;
+  font-weight: bold;
+  /* background-color: lightcyan; */
+}
+
+/* 임신 주차  */
+.pregnant-time {
+  width: 86%;
+}
+
+.pregnant-time h2 {
+  width: 100%;
+}
+.pregnant-time #pregnant-time-container {
+  display: flex;
+  align-items: center;
+}
+.pregnant-time #week,
+#day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  height: 6vh;
+
+  border: #e0e2e6 1px solid;
+  border-radius: 10px;
+
+  font-weight: bold;
+}
+
+.pregnant-time h3 {
+  margin-left: 4%;
+  margin-right: 10%;
+}
+
+/*태명*/
+.bName-container {
+  width: 86%;
+}
+.bName-container h2 {
+  width: 100%;
+}
+.bName-container .bName {
+  display: flex;
+  align-items: center;
+
+  width: 95%;
+  height: 6vh;
+  padding-left: 6%;
+
+  border: #e0e2e6 1px solid;
+  border-radius: 10px;
+
+  font-weight: bold;
+}
+
+/* 영양제  */
+.supplement-container {
+  width: 86%;
+}
+
+.supplement-container h2 {
+  width: 100%;
+}
+
+.supplement-container .supplement {
+  display: flex;
+  align-items: center;
+
+  width: 95%;
+  height: 6vh;
+  padding-left: 6%;
+
+  border: #e0e2e6 1px solid;
+  border-radius: 10px;
+}
