@@ -1,0 +1,6 @@
+.pregnant-time input {
+  text-align: center;
+}
+.pregnant-time input::placeholder {
+  text-align: center;
+}
