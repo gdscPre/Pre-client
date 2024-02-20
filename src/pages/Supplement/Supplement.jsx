@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoArrowLeft } from 'react-icons/go';
@@ -5,11 +6,23 @@ import { BiCalendar } from 'react-icons/bi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoIosArrowForward } from 'react-icons/io';
 import { PiPillLight } from 'react-icons/pi';
+=======
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { GoArrowLeft } from "react-icons/go";
+import { BiCalendar } from "react-icons/bi";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+import { PiPillLight } from "react-icons/pi";
+import { showSupplement } from '../../apis/showSupplement';
+>>>>>>> 118b8eaf73667e30381a1f8f06429770506b772b
 
 import './Supplement.css';
 
 export default function Supplement() {
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const today = new Date();
   //년도
@@ -21,7 +34,20 @@ export default function Supplement() {
   ${day}일`;
   const handleBackBtn = () => {
     navigate(-1);
+<<<<<<< HEAD
   };
+=======
+  }
+  useEffect(() => {
+    showSupplement().then((res) => {
+      setData(res);
+      setLoading(false);
+    });
+  }, []);
+
+  if(loading) return <div className="loading-state">로딩중...</div>;
+
+>>>>>>> 118b8eaf73667e30381a1f8f06429770506b772b
 
   function getDayOfWeek(day) {
     const week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
@@ -79,25 +105,18 @@ export default function Supplement() {
 
       <div className="supplement-list">
         <div className="supplement-box selected-box">
-          <PiPillLight />
           <span>drug 1</span>
         </div>
-        <div className="supplement-box">
-          <PiPillLight />
-          <span>drug 1</span>
-        </div>
-        <div className="supplement-box">
-          <PiPillLight />
-          <span>drug 1</span>
-        </div>
-        <div className="supplement-box">
-          <PiPillLight />
-          <span>drug 1</span>
-        </div>
-        <div className="supplement-box">
-          <PiPillLight />
-          <span>drug 1</span>
-        </div>
+<<<<<<< HEAD
+=======
+        {data.map((supplement, index) => (
+          <div key={index} className={`supplement-box`}>
+            <PiPillLight />
+            <span>{supplement.supplement_id}</span>
+          </div>
+        ))}
+        
+>>>>>>> 118b8eaf73667e30381a1f8f06429770506b772b
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { PieChart } from 'react-minimal-pie-chart';
+import { dietAnalysis } from '../../apis/dietAnalysis';
 
 import './Analysis.css';
 
@@ -18,25 +19,79 @@ export default function Analysis() {
 
   const formattedDate = `${year}년 ${month}월 
   ${day}일`;
+  const [data, setData] = useState([]);
 
-  const kcal = useState(0);
-  //추가 수정 예정 -> 임신 초중기, 후기 별로 다름
-  const appropriateKcal = useState(2340);
+  const [sumKcal, setSumKcal] = useState(0);
+  const [sumCarbs, setSumCarbs] = useState(0);
+  const [sumProtein, setSumProtein] = useState(0);
+  
+  //추가 수정 예정 -> 임신 초중기, 후기 별로 다름 (적정 칼로리/탄수화물/단백질)
+  const appropriateKcal = 2340;
+  const appropriateCarbohydrate = 175;
+  const appropriateProtein = 15;
 
-  const carbohydrate = useState(0);
-  const appropriateCarbohydrate = useState(0);
-  const protein = useState(0);
-  const nutritionState = ['더', '덜', '부족', '적당', '과잉'];
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    dietAnalysis().then((res) => {
+      setSumKcal(res?.sum_calories);
+      setSumCarbs(res?.sum_carbs);
+      setSumProtein(res?.sum_protein);
+      setData(res?.food_list);
+      setLoading(false);
+    });
+  }, []);
   function getDayOfWeek(day) {
     const week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
     const dayOfWeek = week[day.getDay()];
     return dayOfWeek;
   }
 
+  // 칼로리 상태 설정
+  let kcalState = '';
+  let kcalStateNum = 0;
+  if (sumKcal > appropriateKcal) {
+    kcalState = '과잉';
+    kcalStateNum = sumKcal - appropriateKcal;
+  } else if (sumKcal < appropriateKcal) {
+    kcalState =  '부족';
+    kcalStateNum = appropriateKcal - sumKcal;
+  } else {
+    kcalState = '적당';
+  }
+
+  // 탄수화물 상태 설정
+  let carbState = '';
+  let carbStateNum = 0;
+  if (sumCarbs > appropriateCarbohydrate) {
+    carbState = '과잉';
+    carbStateNum = sumCarbs - appropriateCarbohydrate;
+  } else if (sumCarbs < appropriateCarbohydrate) {
+    carbState =  '부족';
+    carbStateNum = appropriateCarbohydrate - sumCarbs;
+  } else {
+    carbState = '적당';
+  }
+
+    // 단백질 상태 설정
+    let proteinState = '';
+    let proteinStateNum = 0;
+    if (sumProtein > appropriateProtein) {
+      proteinState = '과잉';
+      proteinStateNum = sumProtein - appropriateProtein;
+    } else if (sumProtein < appropriateProtein) {
+      proteinState =  '부족';
+      proteinStateNum = appropriateProtein - sumProtein;
+    } else {
+      proteinState = '적당';
+    }
+
   const handleBackBtn = () => {
     navigate(-1);
   }
+
+  if(loading) return <div className="loading-state">로딩중...</div>;
+
   return (
     <div className='container'>
       <div className="banner">
@@ -89,14 +144,14 @@ export default function Analysis() {
           <div className="box-left">
             <div className="box-top">
               <h3>열량</h3>
-              <div className="nutri-state">{nutritionState[2]}</div>
+              <div className="nutri-state">{kcalState}</div>
             </div>
-            <span>{kcal} kcal 를<br/>{nutritionState[1]} 섭취하셨습니다.</span>
+            <span>{kcalStateNum} kcal 를<br/>{kcalState === '과잉' ? '더' : '적게'} 섭취하셨습니다.</span>
           </div>
           <PieChart className='piechart'
             data={[
-              { title: 'One', value: 15, color: '#FFA8B9' },
-              { title: 'Two', value: 10, color: '#FFECEF' },
+              { title: 'One', value: sumKcal, color: '#FFA8B9' },
+              { title: 'Two', value: appropriateKcal, color: '#FFECEF' },
             ]}
           />
         </div>
@@ -104,14 +159,14 @@ export default function Analysis() {
           <div className="box-left">
             <div className="box-top">
               <h3>탄수화물</h3>
-              <div className="nutri-state">{nutritionState[4]}</div>
+              <div className="nutri-state">{carbState}</div>
             </div>
-            <span>{} g 을<br/>{nutritionState[0]} 섭취하셨습니다.</span>
+            <span>{carbStateNum} g 을<br/>{carbState === '과잉' ? '더' : '적게'} 섭취하셨습니다.</span>
           </div>
           <PieChart className='piechart'
             data={[
-              { title: 'One', value: 15, color: '#FFA8B9' },
-              { title: 'Two', value: 5, color: '#FFECEF' },
+              { title: 'One', value: sumCarbs, color: '#FFA8B9' },
+              { title: 'Two', value: appropriateCarbohydrate, color: '#FFECEF' },
             ]}
           />
         </div>
@@ -119,15 +174,15 @@ export default function Analysis() {
           <div className="box-left">
             <div className="box-top">
               <h3>단백질</h3>
-              <div className="nutri-state">{nutritionState[4]}</div>
+              <div className="nutri-state">{proteinState}</div>
             </div>
-            <span>{} g 을<br/>{nutritionState[0]} 섭취하셨습니다.</span>
+            <span>{proteinStateNum} g 을<br/>{proteinState === '과잉' ? '더' : '적게'} 섭취하셨습니다.</span>
           </div>
           
           <PieChart className='piechart'
             data={[
-              { title: 'One', value: 15, color: '#FFA8B9' },
-              { title: 'Two', value: 10, color: '#FFECEF' },
+              { title: 'One', value: sumProtein, color: '#FFA8B9' },
+              { title: 'Two', value: appropriateProtein, color: '#FFECEF' },
             ]}
           />
         </div>
@@ -140,24 +195,14 @@ export default function Analysis() {
           <span className='row'>단백질</span>
           <span className='row'>열량</span>
         </div>
-        <div className="food-box food-1">
-          <span className='row food-name'>아구찜</span>
-          <span className='row'>{carbohydrate}g</span>
-          <span className='row'>{protein}g</span>
-          <span className='row'>{kcal}kcal</span>
-        </div>
-        <div className="food-box food-2">
-          <span className='row food-name'>아구찜</span>
-          <span className='row'>{carbohydrate}g</span>
-          <span className='row'>{protein}g</span>
-          <span className='row'>{kcal}kcal</span>
-        </div>
-        <div className="food-box food-3">
-          <span className='row food-name'>아구찜</span>
-          <span className='row'>{carbohydrate}g</span>
-          <span className='row'>{protein}g</span>
-          <span className='row'>{kcal}kcal</span>
-        </div>
+        {data.map((food, index) => (
+          <div key={index} className={`food-box food-${index + 1}`}>
+            <span className='row food-name'>{food.name}</span>
+            <span className='row'>{food.carbs}g</span>
+            <span className='row'>{food.protein}g</span>
+            <span className='row'>{food.calories}kcal</span>
+          </div>
+        ))}
         
 
       </div>

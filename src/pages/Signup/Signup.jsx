@@ -5,12 +5,25 @@ import axios from 'axios';
 import { Button, TextField, FormControl, FormHelperText, IconButton, Grid, Box, Container } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BsTrash } from 'react-icons/bs';
+import { signUp } from '../../apis/signUp';
+
 
 import './Signup.css';
 
-export default function Signup() {
+const Register = () => {
   const theme = createTheme();
   // const [checked, setChecked] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [bName, setBname] = useState('');
+  const [rePassword, setRePassword] = useState('');
+  const [supplement, setSupplement] = useState('');
+  const [week, setWeek] = useState(0);
+  const [day, setDay] = useState(0);
+  // 영양제 추가
+  const [supplements, setSupplements] = useState([{ id: 1, name: '' }]);
+
   const [emailError, setEmailError] = useState('');
   const [passwordState, setPasswordState] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -29,44 +42,31 @@ export default function Signup() {
   const [joinMessage, setJoinMessage] = useState('');
 
   const handleBackBtn = () => {
-    navigate(-1);
+    navigate("/users/login");
   };
 
   // const handleAgree = event => {
   //   setChecked(event.target.checked);
   // };
 
-  const onhandlePost = async data => {
-    const { email, name, password } = data;
-    const postData = { email, name, password };
+  // const onhandlePost = async data => {
+  //   const { email, name, password } = data;
+  //   const postData = { email, name, password };
 
-    // post
-    await axios
-      .post('/member/join', postData)
-      .then(response => {
-        History.push('/login');
-      })
-      .catch(err => {
-        console.log(err);
-        setJoinMessage('회원가입에 실패하였습니다. 모든 정보를 확인해주세요!');
-      });
-  };
+  //   // post
+  //   await axios
+  //     .post('/member/join', postData)
+  //     .then(response => {
+  //       History.push('/login');
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //       setJoinMessage('회원가입에 실패하였습니다. 모든 정보를 확인해주세요!');
+  //     });
+  // };
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    const data = new FormData(e.currentTarget);
-    const joinData = {
-      email: data.get('email'),
-      name: data.get('name'),
-      password: data.get('password'),
-      rePassword: data.get('rePassword'),
-      week: data.get('week'),
-      day: data.get('day'),
-      bName: data.get('bName'),
-      supplement: data.get('supplement'),
-    };
-    const { email, name, password, rePassword, week, day, bName, supplement } = joinData;
 
     // 이메일 유효성 체크
     const emailRegex =
@@ -85,7 +85,7 @@ export default function Signup() {
 
     // 이름 유효성 검사
     const nameRegex = /^[가-힣a-zA-Z]+$/;
-    if (!nameRegex.test(name) || name.length < 1) setNameError('올바른 이름을 입력해주세요.');
+    if (!nameRegex.test(name) || name.length < 1) setNameError('올바른 태명을 입력해주세요.');
     else setNameError('');
 
     // 태명 유효성 검사
@@ -94,13 +94,12 @@ export default function Signup() {
     else setbNameError('');
 
     // 영양제 이름 유효성 검사
-    const supplementRegex = /^[가-힣a-zA-Z]+$/;
-    if (!supplementRegex.test(supplement) || supplement.length < 1) {
-      setsupplementError('올바른 영양제 이름을 입력해주세요.');
-    } else {
-      setsupplementError('');
-    }
-
+    // const supplementRegex = /^[^!@#$%^&*(),.?":{}|<>0-9]+$/;
+    // if (!supplement || !supplementRegex.test(supplement) || supplement.length < 1) {
+    //   setsupplementError('올바른 영양제 이름을 입력해주세요.');
+    // } else {
+    //   setsupplementError('');
+    // }
     if (
       emailRegex.test(email) &&
       passwordRegex.test(password) &&
@@ -110,7 +109,7 @@ export default function Signup() {
       bNameRegex.test(supplement)
       // checked
     ) {
-      onhandlePost(joinData);
+      // onhandlePost(joinData);
       setJoinMessage('가입이 가능합니다'); // 가입 가능한 상황일 때 메시지 업데이트
       setButtonColor('#D14D72'); // 버튼 색상 변경
     } else {
@@ -119,8 +118,6 @@ export default function Signup() {
     }
   };
 
-  // 영양제 추가
-  const [supplements, setSupplements] = useState([{ id: 1, name: '' }]);
 
   const handleAddSupplement = () => {
     const newSupplement = { id: supplements.length + 1, name: ' ' };
@@ -129,12 +126,12 @@ export default function Signup() {
 
   // 영양제 삭제
   const handleRemoveSupplement = id => {
-    if (supplements.length === 1) {
-      // 최소한 영양제 하나는 존재하도록
-      return;
-    }
     const updatedSupplements = supplements.filter(supplement => supplement.id !== id);
     setSupplements(updatedSupplements);
+  };
+  //회원가입 버튼
+  const handleSignupBtn = async () => {
+    await signUp(email, name, password, week, day, bName, supplement);
   };
   return (
     <ThemeProvider theme={theme}>
@@ -273,7 +270,7 @@ export default function Signup() {
                         name={`supplement_${supplement.id}`}
                         label={`영양제 ${supplement.id}`}
                         error={false}
-                        sx={{ width: '90%' }}
+                        sx={{ width: '91%' }}
                       />
                       <IconButton
                         color="secondary"
@@ -304,9 +301,10 @@ export default function Signup() {
                 }}>
                 + supplements
               </Button>
-
+              {/* <span>{joinMessage}</span> */}
               {/* 가입 완료하기 버튼 */}
               <Button
+                onClick={handleSignupBtn}
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -329,4 +327,5 @@ export default function Signup() {
       </Container>
     </ThemeProvider>
   );
-}
+};
+export default Register;

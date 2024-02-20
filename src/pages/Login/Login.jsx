@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../../apis/login';
 
-const User = {
-  email: 'test@example.com',
-  pw: 'test2323@@@',
-};
 
 export default function Login() {
   const logoSrc =
@@ -50,32 +47,12 @@ export default function Login() {
   //   }
   // }
 
-  const onClickConfirmButton = () => {
-    // 요청을 보내는 부분
-    fetch('/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password: pw,
-      }),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // 응답을 처리하는 부분
-        alert('로그인에 성공');
-        navigate('/main');
-      })
-      .catch(error => {
-        alert('등록되지 않은 회원입니다.');
-      });
+  const onClickConfirmButton = async () => {
+    const result = await login(email, pw);
+    const { jwtAccessToken, jwtRefreshToken } = result;
+    localStorage.setItem('access', jwtAccessToken);
+    localStorage.setItem('refresh', jwtRefreshToken);
+    navigate("/main");
   };
 
   const onClickRegisterButton = () => {
