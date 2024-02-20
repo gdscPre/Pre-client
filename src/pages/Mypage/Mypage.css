@@ -79,7 +79,7 @@ header {
   width: 100%;
 }
 
-.supplement-container .supplement {
+.supplement-container #mypage-supplement {
   display: flex;
   align-items: center;
 

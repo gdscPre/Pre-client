@@ -8,102 +8,128 @@
   flex-direction: column;
   align-items: center;
 }
+
+/* 로고  */
 .container #logo {
   margin: 10vh auto 8vh auto;
   width: 50vw;
   max-width: 200px;
-  
 }
 .input {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-optical-sizing: auto;
   font-weight: 100;
   font-style: normal;
+  /* @@ -28,82 +27,103 @@ */
+  width: 100rem;
 }
 
 .email-input {
   display: flex;
   flex-direction: column;
-  margin-bottom: 3vh;
-  width: 16rem;
+  margin-bottom: 2vh;
 }
 .email-input .errorMessageWrap span {
-  color: #D14D72;
+  color: #d14d72;
   font-size: 0.7rem;
 }
 .email-input span {
   font-size: 0.8rem;
-  color: #333D42;
+  color: #333d42;
   margin-bottom: 0.5em;
   margin-left: 0.8em;
 }
 .email-input input {
-  height: 4.5vh;
-  background-color: #FFF7F8;
-  border: 1px solid #333D42;
-  padding: 0.5rem;
+  height: 6vh;
+  width: 18rem;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
   box-sizing: border-box;
   border-radius: 8px;
 }
+
+.email-input input:focus {
+  outline: none;
+}
+
 .password-input {
   display: flex;
   flex-direction: column;
   margin-bottom: 6vh;
 }
 .password-input .errorMessageWrap span {
-  color: #D14D72;
+  color: #d14d72;
   font-size: 0.7rem;
 }
 .password-input span {
   font-size: 0.8rem;
-  color: #333D42;
+  color: #333d42;
   margin-bottom: 0.5em;
   margin-left: 0.8em;
 }
 .password-input input {
-  height: 4.5vh;
-  background-color: #FFF7F8;
-  border: 1px solid #333D42;
-  padding: 0.5rem;
+  height: 6vh;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
   box-sizing: border-box;
   border-radius: 8px;
 }
+
+.password-input input:focus {
+  outline: none;
+}
+
+/* 로그인, 회원가입 버튼  */
 
 .button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 1.2rem;
+}
+
+.button button {
+  width: 14rem;
 }
 #login-button {
   color: #fff;
-  background-color: #D14D72;
-  border: 0;
-  width: 12rem;
-  height: 4vh;
+  background-color: #d14d72;
+
+  height: 5vh;
   border-radius: 20px;
   font-size: 0.8em;
-  cursor: pointer;
-}
-.button hr {
-  border: 0;
-  height: 0;
-  border-top: 1px solid #FCC8D1;
-  width: 16rem;
-  margin: 2vh 0vh;
-}
-#register-button {
-  color: #D14D72;
-  background-color: #fff;
-  border: 1px solid #D14D72;
-  width: 12rem;
-  height: 4vh;
-  border-radius: 20px;
-  font-size: 0.8em;
+  font-weight: bold;
   cursor: pointer;
 }
 
 #login-button:disabled {
-  color: #D14D72;
+  color: #d14d72;
   background-color: #fff;
-  border: 1px solid #D14D72;
+  border: 1.5px solid #d14d72;
+}
+
+/* 구분선 */
+.button hr {
+  border: 0;
+  height: 0;
+  border-top: 1.5px solid #fcc8d1;
+  width: 16rem;
+  margin: 3vh 0vh;
+}
+
+#register-button {
+  color: #d14d72;
+  background-color: #fff;
+
+  height: 5vh;
+
+  border: 1.5px solid #d14d72;
+  border-radius: 20px;
+
+  font-size: 0.8em;
+  font-weight: bold;
+
+  cursor: pointer;
 }

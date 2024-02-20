@@ -45,7 +45,7 @@ export default function Modify() {
 
       <div className="supplement-container">
         <h2>영양제</h2>
-        <div id="supplement">엽산 400</div>
+        <div id="mypage-supplement">엽산 400</div>
       </div>
 
       <Button

@@ -96,22 +96,13 @@ export default function Modify() {
         {supplements.map(supplement => (
           <Grid item xs={12} key={supplement.id}>
             <TextField
-              sx={{
-                mb: '4',
-                '& .MuiInput-underline:before': {
-                  borderBottomColor: '#E0E2E6', // 초기 상태의 색상
-                },
-                '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-                  borderBottomColor: '#FFA8B9', // 마우스 호버 시의 색상
-                },
-                '& .MuiInput-underline:after': {
-                  borderBottomColor: '#FFA8B9', // 클릭 시의 색상
-                },
-              }}
+              // sx={{ backgroundColor: 'lightblue' }}
+              className="modify-supplement"
               required
               id={`supplement_${supplement.id}`}
               name={`supplement_${supplement.id}`}
-              label={`영양제 ${supplement.id}`}
+              // label={`영양제 ${supplement.id}`}
+              placeholder={`영양제 ${supplement.id}`}
               error={false}
               fullWidth
               InputProps={{
