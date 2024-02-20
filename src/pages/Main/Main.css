@@ -188,6 +188,14 @@ body {
   justify-content: center;
 }
 
+.button-clicked .pharm-box {
+  color: #fff; /* Change font color to white */
+}
+
+.button-clicked .pharm button {
+  visibility: hidden; /* Hide the button */
+}
+
 .container .tips-for-pregnants {
   width: 90vw;
   height: 10vh;
@@ -196,4 +204,14 @@ body {
   padding: 3vw 5vw;
   border-radius: 10px;
 
+}
+
+.error-occured {
+  display: flex;
+  color: #FFA8B9;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-size: 5em;
 }
