@@ -8,7 +8,7 @@ import { BsTrash } from 'react-icons/bs';
 
 import './Signup.css';
 
-const Register = () => {
+export default function Signup() {
   const theme = createTheme();
   // const [checked, setChecked] = useState(false);
   const [emailError, setEmailError] = useState('');
@@ -136,10 +136,197 @@ const Register = () => {
     const updatedSupplements = supplements.filter(supplement => supplement.id !== id);
     setSupplements(updatedSupplements);
   };
-
   return (
-    <div className="">
-      <Example3 />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <div className="banner">
+          <button onClick={handleBackBtn} className="back-btn">
+            <GoArrowLeft />
+          </button>
+          <h3>회원가입</h3>
+        </div>
+
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{
+              mt: 3,
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#FFA8B9', // 입력란에 포커스가 있을 때 테두리 색상
+              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {
+                caretColor: '#FFA8B9', // 입력란에 포커스가 있을 때 커서 색상
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#FFA8B9', // 입력란에 포커스가 있을 때 라벨 색상을 #FFA8B9로 변경
+              },
+              '& .MuiOutlinedInput-input': {
+                backgroundColor: '#FFF7F8', // 입력란의 배경 색상을 #FFA8B9로 변경
+              },
+              '& .MuiOutlinedInput-root.Mui-focused.MuiFilledInput-root': {
+                backgroundColor: '#FFF7F8', // 자동 완성 값이 채워졌을 때 배경색을 #FFA8B9로 설정
+              },
+            }}>
+            <FormControl component="fieldset" variant="standard">
+              <Grid container spacing={2}>
+                {/* 이메일  */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    autoFocus
+                    fullWidth
+                    type="email"
+                    id="email"
+                    name="email"
+                    label="이메일"
+                    error={emailError !== '' || false}
+                  />
+                </Grid>
+                <formhelpertext>{emailError}</formhelpertext>
+
+                {/* 비밀번호  */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="password"
+                    id="password"
+                    name="password"
+                    label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
+                    error={passwordState !== '' || false}
+                  />
+                </Grid>
+                <formhelpertext>{passwordState}</formhelpertext>
+
+                {/* 비밀번호 확인  */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="password"
+                    id="rePassword"
+                    name="rePassword"
+                    label="비밀번호 확인"
+                    error={passwordError !== '' || false}
+                  />
+                </Grid>
+                <formhelpertext>{passwordError}</formhelpertext>
+
+                {/* 이름 */}
+                <Grid item xs={12}>
+                  <TextField required fullWidth id="name" name="name" label="이름" error={nameError !== '' || false} />
+                </Grid>
+                <formhelpertext>{nameError}</formhelpertext>
+
+                {/* 임신 주차  */}
+                <Grid item xs={12}>
+                  <div id="pregnant-time">
+                    <TextField
+                      required
+                      type="number"
+                      id="week"
+                      name="week"
+                      label="weeks"
+                      sx={{ width: '40%', mr: '2%' }}
+                    />{' '}
+                    주
+                    <TextField
+                      required
+                      type="number"
+                      id="day"
+                      name="day"
+                      label="days"
+                      sx={{ width: '40%', mr: '2%', ml: '4%' }}
+                    />{' '}
+                    일
+                  </div>
+                </Grid>
+
+                {/* 태명 */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="bName"
+                    name="bName"
+                    label="태명"
+                    error={nameError !== '' || false}
+                  />
+                </Grid>
+                <formhelpertext>{bNameError}</formhelpertext>
+
+                {/* 영양제 */}
+                {supplements.map(supplement => (
+                  <Grid item xs={12} key={supplement.id}>
+                    <Grid container alignItems="center">
+                      <TextField
+                        required
+                        id={`supplement_${supplement.id}`}
+                        name={`supplement_${supplement.id}`}
+                        label={`영양제 ${supplement.id}`}
+                        error={false}
+                        sx={{ width: '90%' }}
+                      />
+                      <IconButton
+                        color="secondary"
+                        onClick={() => handleRemoveSupplement(supplement.id)}
+                        aria-label="remove supplement">
+                        <BsTrash size={'18px'} />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                ))}
+                <formhelpertext>{supplementError}</formhelpertext>
+              </Grid>
+
+              {/* 영양제 추가 버튼  */}
+              <Button
+                onClick={handleAddSupplement}
+                sx={{
+                  alignSelf: 'center',
+                  border: '1px solid #a8a8a8',
+                  borderRadius: '50px',
+                  width: '180px',
+                  backgroundColor: '#FFF7F8',
+                  mt: '7%',
+                  color: '#7b7b7b',
+                  '&:hover': {
+                    backgroundColor: '#FCC8D1',
+                  },
+                }}>
+                + supplements
+              </Button>
+
+              {/* 가입 완료하기 버튼 */}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 5,
+                  mb: 8,
+                  backgroundColor: buttonColor,
+                  '&:hover': {
+                    backgroundColor: '#D14D72', // 마우스 호버 시의 배경 색상 변경
+                  },
+                }}
+                size="large"
+                id="join-finish">
+                가입 완료하기
+              </Button>
+            </FormControl>
+            <formhelpertext>{registerError}</formhelpertext>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
-};
+}
