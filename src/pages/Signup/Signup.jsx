@@ -119,7 +119,6 @@ const Register = () => {
   };
 
 
-
   const handleAddSupplement = () => {
     const newSupplement = { id: supplements.length + 1, name: ' ' };
     setSupplements([...supplements, newSupplement]);

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { GoArrowLeft } from "react-icons/go";
-import { CiSearch } from "react-icons/ci";
-import { AiFillPlusCircle } from "react-icons/ai";
+import React, { useEffect, useState } from 'react';
+import { GoArrowLeft } from 'react-icons/go';
+import { CiSearch } from 'react-icons/ci';
+import { AiFillPlusCircle } from 'react-icons/ai';
 
 import './Register.css';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { foodList } from '../../apis/foodList';
 import { foodSelect } from '../../apis/foodSelect';
 
 export default function Register() {
-
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
@@ -29,7 +28,7 @@ export default function Register() {
 
   const handleBackBtn = () => {
     navigate(-1);
-  }
+  };
 
   const handleFoodSelect = (food) => {
     setSelectedFoods([...selectedFoods, food]); // Add selected food to the list
@@ -60,16 +59,16 @@ export default function Register() {
 
 
   return (
-    <div className='container'>
+    <div className="container">
       <div className="banner">
-        <button onClick={handleBackBtn} className='back-btn'>
+        <button onClick={handleBackBtn} className="back-btn">
           <GoArrowLeft />
         </button>
         <h3>식단 기록하기</h3>
       </div>
       <div className="search-box">
         <CiSearch />
-        <input type="text" placeholder='무슨 음식을 드셨나요?' />
+        <input type="text" placeholder="무슨 음식을 드셨나요?" />
       </div>
 
       <div className="food-list">
@@ -95,7 +94,7 @@ export default function Register() {
         <button onClick={handleOwnRegisterBtn}>
           <span>직접 등록하기</span>
         </button>
+      </div>
     </div>
-    </div>
-  )
+  );
 }
