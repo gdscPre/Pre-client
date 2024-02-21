@@ -1,76 +1,17 @@
 // 마이 페이지 수정
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import './Modify.css';
-import {
-  dialogClasses,
-  Button,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  TextField,
-  Grid,
-  Box,
-  Container,
-} from '@mui/material';
+import { Button, IconButton, TextField, Grid } from '@mui/material';
 import { BsTrash } from 'react-icons/bs';
 import InputAdornment from '@mui/material/InputAdornment';
-import { BorderColor } from '@mui/icons-material';
 
 export default function Modify() {
-  // const [checked, setChecked] = useState(false);
-
-  const [bNameError, setbNameError] = useState('');
-  const [supplementError, setsupplementError] = useState('');
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    const data = new FormData(e.currentTarget);
-    const joinData = {
-      week: data.get('week'),
-      day: data.get('day'),
-      bName: data.get('bName'),
-      supplement: data.get('supplement'),
-    };
-    const { week, day, bName, supplement } = joinData;
-
-    // 태명 유효성 검사
-    const bNameRegex = /^[가-힣a-zA-Z]+$/;
-    if (!bNameRegex.test(bName) || bName.length < 1) setbNameError('올바른 태명을 입력해주세요.');
-    else setbNameError('');
-
-    const supplementRegex = /^[^!@#$%^&*(),.?":{}|<>0-9]+$/;
-    if (!supplement || !supplementRegex.test(supplement) || supplement.length < 1) {
-      setsupplementError('올바른 영양제 이름을 입력해주세요.');
-    } else {
-      setsupplementError('');
-    }
-  };
-
-  // 영양제 추가
-  const [supplements, setSupplements] = useState([{ id: 1, name: '' }]);
-
-  const handleAddSupplement = () => {
-    const newSupplement = { id: supplements.length + 1, name: ' ' };
-    setSupplements([...supplements, newSupplement]);
-  };
-
-  // 영양제 삭제
-  const handleRemoveSupplement = id => {
-    if (supplements.length === 1) {
-      // 최소한 영양제 하나는 존재하도록
-      return;
-    }
-    const updatedSupplements = supplements.filter(supplement => supplement.id !== id);
-    setSupplements(updatedSupplements);
-  };
-
   return (
     <div className="container">
-      <header>(user name)님</header>
+      {/* <header>{user_name}님</header> */}
 
       {/* 임신 주차  */}
       <div className="pregnant-time">

@@ -1,51 +1,56 @@
 // 마이 페이지
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import './Mypage.css';
-import {
-  dialogClasses,
-  Button,
-  TextField,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  Grid,
-  Box,
-  Container,
-} from '@mui/material';
+import { Button } from '@mui/material';
+
+import { getMyPage } from '../../apis/myPage';
 
 export default function Modify() {
+  //  수정하기 버튼 누르면 modify 로 이동
+  // 현재 페이지에서 modify 페이지로 이동할 때 데이터 전달
   const navigate = useNavigate();
-
   const handleModifyClick = () => {
-    navigate('/users/modify');
+    navigate('/users/modify', {
+      state: {
+        week: data?.week,
+        day: data?.day,
+        b_name: data?.b_name,
+        user_name: data?.user_name,
+        supplements: data?.supplements,
+      },
+      replace: true, // 이전 경로를 교체 (patch)
+    });
   };
+
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    getMyPage().then(res => {
+      setData(res);
+    });
+  }, []);
 
   return (
     <div className="container">
-      <header>(user name)님</header>
-
+      <header>{data?.user_name}님</header>
       <div className="pregnant-time">
         <h2>임신 주차</h2>
         <div id="pregnant-time-container">
-          <div id="week">14</div>
+          <div id="week">{data?.week}</div>
           <h3>주</h3>
 
-          <div id="day">3</div>
+          <div id="day">{data?.day}</div>
           <h3>일</h3>
         </div>
       </div>
-
       <div className="bName-container">
         <h2>태명</h2>
-        <div className="bName">새싹이</div>
+        <div className="bName">{data?.b_name}</div>
       </div>
-
       <div className="supplement-container">
         <h2>영양제</h2>
-        <div id="mypage-supplement">엽산 400</div>
+        <div id="mypage-supplement">{data?.supplements}</div>
       </div>
 
       <Button
