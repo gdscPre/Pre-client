@@ -3,7 +3,6 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../apis/login';
 
-
 export default function Login() {
   const logoSrc =
     'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmcIeo%2FbtsEZn2Olne%2Fl7MSODROrPaXghuXcc0fb0%2Fimg.png';
@@ -52,7 +51,7 @@ export default function Login() {
     const { jwtAccessToken, jwtRefreshToken } = result;
     localStorage.setItem('access', jwtAccessToken);
     localStorage.setItem('refresh', jwtRefreshToken);
-    navigate("/main");
+    navigate('/main');
   };
 
   const onClickRegisterButton = () => {

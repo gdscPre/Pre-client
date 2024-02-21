@@ -30,8 +30,8 @@ function App() {
         <Route path="/supplement" element={<Supplement />} />
         <Route path="/diet/record" element={<RegisterOwn />} />
         <Route path="/*" element={<Main />} />
-        <Route path="/users/mypage" element={<Mypage />} />
         <Route path="/users/modify" element={<Modify />} />
+        <Route path="/users/mypage" element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   );
