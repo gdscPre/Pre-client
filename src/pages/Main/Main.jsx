@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import './Main.css';
-import { HiArrowRight } from "react-icons/hi2";
-import { PiPillBold } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
-import { getMainPage } from "../../apis/mainpage";
-
+import { HiArrowRight } from 'react-icons/hi2';
+import { PiPillBold } from 'react-icons/pi';
+import { useNavigate } from 'react-router-dom';
+import { getMainPage } from '../../apis/mainpage';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -24,32 +23,25 @@ export default function Main() {
   ${day}일`;
 
   useEffect(() => {
-    getMainPage().then((res) => {
+    getMainPage().then(res => {
       setData(res);
       setLoading(false);
     });
   }, []);
 
-  if(loading) return <div className="loading-state">로딩중...</div>;
-
-
-
+  if (loading) return <div className="loading-state">로딩중...</div>;
 
   const onClickAnalysisBtn = () => {
-    navigate("/diet/analysis");
+    navigate('/diet/analysis');
   };
 
   const onClickRegisterNutritionBtn = () => {
-    navigate("/diet/list");
+    navigate('/diet/list');
   };
 
   const onClickSupplementsBtn = () => {
-    navigate("/supplement");
+    navigate('/supplement');
   };
-
-
-
-
 
   return (
     <div className="container">
@@ -62,16 +54,20 @@ export default function Main() {
             <div id="name">{data?.b_name} </div>
             <div className="">만나기까지</div>
           </div>
-          
+
           <div className="d-day-date">{data?.d_day}일</div>
-          <span>{data?.week}주 {data?.day}일째</span>
+          <span>
+            {data?.week}주 {data?.day}일째
+          </span>
         </div>
         <div className="baby-img"></div>
       </div>
       <div className="diet-analysis">
         <div className="analysis">
           <span>식단 분석</span>
-          <button onClick={onClickAnalysisBtn}><HiArrowRight /></button>
+          <button onClick={onClickAnalysisBtn}>
+            <HiArrowRight />
+          </button>
         </div>
         <button onClick={onClickRegisterNutritionBtn} id="record-nutrition-btn">
           <span>식단 기록하기</span>
@@ -81,7 +77,9 @@ export default function Main() {
       <div className="nutritional-supplements">
         <div className="supplements-top">
           <span>영양제</span>
-          <button onClick={onClickSupplementsBtn}><HiArrowRight /></button>
+          <button onClick={onClickSupplementsBtn}>
+            <HiArrowRight />
+          </button>
         </div>
         <div className="nutritional-status">
           <div className="status-remind">
