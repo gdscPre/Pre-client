@@ -54,6 +54,7 @@
    flex-direction: column;
    width: 100%;
    height: 60vh;
+   overflow: scroll;
 }
 .supplement-list .supplement-box {
   width: 100%;
