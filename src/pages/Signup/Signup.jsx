@@ -1,331 +1,296 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoArrowLeft } from 'react-icons/go';
-import axios from 'axios';
-import { Button, TextField, FormControl, FormHelperText, IconButton, Grid, Box, Container } from '@mui/material/';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BsTrash } from 'react-icons/bs';
 import { signUp } from '../../apis/signUp';
-
-
 import './Signup.css';
 
-const Register = () => {
-  const theme = createTheme();
-  // const [checked, setChecked] = useState(false);
+export default function Join() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [bName, setBname] = useState('');
+  const [b_name, setBName] = useState('');
   const [rePassword, setRePassword] = useState('');
-  const [supplement, setSupplement] = useState('');
   const [week, setWeek] = useState(0);
   const [day, setDay] = useState(0);
-  // 영양제 추가
   const [supplements, setSupplements] = useState([{ id: 1, name: '' }]);
 
-  const [emailError, setEmailError] = useState('');
-  const [passwordState, setPasswordState] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [nameError, setNameError] = useState('');
-  const [bNameError, setbNameError] = useState('');
-  const [supplementError, setsupplementError] = useState('');
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [nameValid, setNameValid] = useState(false);
+  const [bNameValid, setBNameValid] = useState(false);
+  const [rePasswordValid, setRePasswordValid] = useState(false);
+  const [weekValid, setWeekValid] = useState(false);
+  const [dayValid, setDayValid] = useState(false);
+  const [supplementsValid, setSupplementsValid] = useState(false);
 
-  const [registerError, setRegisterError] = useState('');
+  const [notAllow, setNotAllow] = useState(true);
 
-  const navigate = useNavigate();
-
-  // 초기 '가입 완료하기' 버튼 색상
-  const [buttonColor, setButtonColor] = useState('#FCC8D1');
-
-  // 가입 메시지
-  const [joinMessage, setJoinMessage] = useState('');
-
-  const handleBackBtn = () => {
-    navigate("/users/login");
+  //이메일
+  const handleEmail = e => {
+    setEmail(e.target.value);
+    const regex =
+      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    if (regex.test(email)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
+    }
   };
+
+  //비밀번호
+  const handlePassword = e => {
+    setPassword(e.target.value);
+    const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    setPasswordValid(regex.test(e.target.value));
+  };
+
+  //비밀번호 확인
+  const handleRePassword = e => {
+    setRePassword(e.target.value);
+    setRePasswordValid(password === e.target.value);
+  };
+
+  //이름
+  const handleName = e => {
+    setName(e.target.value);
+    const regex = /^[가-힣a-zA-Z\s]+$/;
+    setNameValid(regex.test(e.target.value));
+  };
+
+  // 임신 주차
+  const handleWeek = e => {
+    const value = parseInt(e.target.value, 10);
+    setWeek(value);
+
+    // 숫자가 양수인지 확인
+    setWeekValid(!isNaN(value) && value >= 0);
+  };
+
+  const handleDay = e => {
+    const value = parseInt(e.target.value, 10);
+    setDay(value);
+
+    // 숫자가 양수인지 확인
+    setDayValid(!isNaN(value) && value >= 0);
+  };
+
+  // 태명
+  const handleBName = e => {
+    setBName(e.target.value);
+    const regex = /^[가-힣a-zA-Z\s]+$/;
+    setBNameValid(regex.test(e.target.value));
+  };
+
+  //영양제
+  const handleSupplements = (index, e) => {
+    const updatedSupplements = [...supplements];
+    updatedSupplements[index].name = e.target.value;
+    setSupplements(updatedSupplements);
+
+    // 각각의 영양제에 대한 유효성 검사
+    const regex = /^[가-힣a-zA-Z\s]+$/;
+    const isValid = updatedSupplements.every(supplement => regex.test(supplement.name));
+    setSupplementsValid(isValid);
+  };
+
+  useEffect(() => {
+    if (
+      emailValid &&
+      passwordValid &&
+      nameValid &&
+      bNameValid &&
+      rePasswordValid &&
+      weekValid &&
+      dayValid &&
+      supplementsValid
+    ) {
+      setNotAllow(false);
+      return;
+    }
+    setNotAllow(true);
+  }, [emailValid, passwordValid, nameValid, bNameValid, rePasswordValid, weekValid, dayValid, supplementsValid]);
 
   // const handleAgree = event => {
   //   setChecked(event.target.checked);
   // };
 
-  // const onhandlePost = async data => {
-  //   const { email, name, password } = data;
-  //   const postData = { email, name, password };
+  const onhandlePost = async data => {
+    const { email, name, password } = data;
+    const postData = { email, name, password };
 
-  //   // post
-  //   await axios
-  //     .post('/member/join', postData)
-  //     .then(response => {
-  //       History.push('/login');
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //       setJoinMessage('회원가입에 실패하였습니다. 모든 정보를 확인해주세요!');
-  //     });
-  // };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    // 이메일 유효성 체크
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!emailRegex.test(email)) setEmailError('올바른 이메일 형식이 아닙니다.');
-    else setEmailError('');
-
-    // 비밀번호 유효성 체크
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password)) setPasswordState('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!');
-    else setPasswordState('');
-
-    // 비밀번호 같은지 체크
-    if (password !== rePassword) setPasswordError('비밀번호가 일치하지 않습니다.');
-    else setPasswordError('');
-
-    // 이름 유효성 검사
-    const nameRegex = /^[가-힣a-zA-Z]+$/;
-    if (!nameRegex.test(name) || name.length < 1) setNameError('올바른 태명을 입력해주세요.');
-    else setNameError('');
-
-    // 태명 유효성 검사
-    const bNameRegex = /^[가-힣a-zA-Z]+$/;
-    if (!bNameRegex.test(bName) || bName.length < 1) setbNameError('올바른 태명을 입력해주세요.');
-    else setbNameError('');
-
-    // 영양제 이름 유효성 검사
-    // const supplementRegex = /^[^!@#$%^&*(),.?":{}|<>0-9]+$/;
-    // if (!supplement || !supplementRegex.test(supplement) || supplement.length < 1) {
-    //   setsupplementError('올바른 영양제 이름을 입력해주세요.');
-    // } else {
-    //   setsupplementError('');
-    // }
-    if (
-      emailRegex.test(email) &&
-      passwordRegex.test(password) &&
-      password === rePassword &&
-      nameRegex.test(name) &&
-      bNameRegex.test(bName) &&
-      bNameRegex.test(supplement)
-      // checked
-    ) {
-      // onhandlePost(joinData);
-      setJoinMessage('가입이 가능합니다'); // 가입 가능한 상황일 때 메시지 업데이트
-      setButtonColor('#D14D72'); // 버튼 색상 변경
-    } else {
-      setJoinMessage('모든 정보를 확인해주세요!'); // 가입이 불가능한 상황일 때 메시지 업데이트
-      setButtonColor('#FCC8D1'); // 초기 버튼 색상으로 변경
-    }
+    // post
+    await axios
+      .post('/member/join', postData)
+      .then(response => {
+        History.push('/login');
+      })
+      .catch(err => {
+        console.log(err);
+        setJoinMessage('회원가입에 실패하였습니다. 모든 정보를 확인해주세요!');
+      });
   };
 
+  //뒤로 가기
+  const handleBackBtn = () => {
+    navigate(-1);
+  };
 
+  // 영양제 추가
   const handleAddSupplement = () => {
     const newSupplement = { id: supplements.length + 1, name: ' ' };
     setSupplements([...supplements, newSupplement]);
   };
-
   // 영양제 삭제
   const handleRemoveSupplement = id => {
-    const updatedSupplements = supplements.filter(supplement => supplement.id !== id);
-    setSupplements(updatedSupplements);
+    if (supplements.length > 1) {
+      const updatedSupplements = supplements.filter(supplement => supplement.id !== id);
+      setSupplements(updatedSupplements);
+    }
   };
-  //회원가입 버튼
+
   const handleSignupBtn = async () => {
-    await signUp(email, name, password, week, day, bName, supplement);
+    await signUp(email, name, password, rePassword, week, day, b_name, supplements);
   };
+
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <div className="banner">
-          <button onClick={handleBackBtn} className="back-btn">
-            <GoArrowLeft />
-          </button>
-          <h3>회원가입</h3>
+    <div className="container">
+      <header>
+        <button onClick={handleBackBtn} className="back-btn">
+          <GoArrowLeft />
+        </button>
+        <h3>회원가입</h3>
+      </header>
+      <form className="input">
+        {/* 이메일 */}
+        <div className="email-input">
+          <span>이메일</span>
+          <input type="email" placeholder="email" value={email} onChange={handleEmail} required></input>
+
+          <div className="errorMessageWrap">
+            {!emailValid && email.length > 0 && <span>올바른 이메일을 입력해주세요.</span>}
+          </div>
         </div>
 
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{
-              mt: 3,
-              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#FFA8B9', // 입력란에 포커스가 있을 때 테두리 색상
-              },
-              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {
-                caretColor: '#FFA8B9', // 입력란에 포커스가 있을 때 커서 색상
-              },
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: '#FFA8B9', // 입력란에 포커스가 있을 때 라벨 색상을 #FFA8B9로 변경
-              },
-              '& .MuiOutlinedInput-input': {
-                backgroundColor: '#FFF7F8', // 입력란의 배경 색상을 #FFA8B9로 변경
-              },
-              '& .MuiOutlinedInput-root.Mui-focused.MuiFilledInput-root': {
-                backgroundColor: '#FFF7F8', // 자동 완성 값이 채워졌을 때 배경색을 #FFA8B9로 설정
-              },
-            }}>
-            <FormControl component="fieldset" variant="standard">
-              <Grid container spacing={2}>
-                {/* 이메일  */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    autoFocus
-                    fullWidth
-                    type="email"
-                    id="email"
-                    name="email"
-                    label="이메일"
-                    error={emailError !== '' || false}
-                  />
-                </Grid>
-                <formhelpertext>{emailError}</formhelpertext>
+        {/* 비밀번호  */}
+        <div className="password-input">
+          <span>비밀번호</span>
+          <input type="password" placeholder="password" value={password} onChange={handlePassword} required></input>
+          <div className="errorMessageWrap">
+            {!passwordValid && password.length > 0 && <span>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</span>}
+          </div>
+        </div>
 
-                {/* 비밀번호  */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="password"
-                    id="password"
-                    name="password"
-                    label="비밀번호 (숫자+영문자+특수문자 8자리 이상)"
-                    error={passwordState !== '' || false}
-                  />
-                </Grid>
-                <formhelpertext>{passwordState}</formhelpertext>
+        {/* 비밀번호 확인  */}
+        <div className="password-check-input">
+          <span>비밀번호 확인</span>
+          <input type="password" placeholder="password" value={rePassword} onChange={handleRePassword} required></input>
+        </div>
 
-                {/* 비밀번호 확인  */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="password"
-                    id="rePassword"
-                    name="rePassword"
-                    label="비밀번호 확인"
-                    error={passwordError !== '' || false}
-                  />
-                </Grid>
-                <formhelpertext>{passwordError}</formhelpertext>
+        {/* 이름 */}
+        <div className="name-input">
+          <span>이름</span>
+          <input type="text" placeholder="name" value={name} onChange={handleName} required></input>
+          <div className="errorMessageWrap">
+            {!nameValid && name.length > 0 && <span>올바른 이름을 입력해주세요.</span>}
+          </div>
+        </div>
 
-                {/* 이름 */}
-                <Grid item xs={12}>
-                  <TextField required fullWidth id="name" name="name" label="이름" error={nameError !== '' || false} />
-                </Grid>
-                <formhelpertext>{nameError}</formhelpertext>
+        {/* 임신 주차  */}
+        <div className="pregnancy-time">
+          <span>임신 주차</span>
+          <div className="pregnancy-time-container">
+            <input type="number" placeholder="week" value={week} onChange={handleWeek} required></input>
+            <span>주</span>
+            <input type="number" placeholder="day" value={day} onChange={handleDay} required></input>
+            <span>일</span>
+          </div>
 
-                {/* 임신 주차  */}
-                <Grid item xs={12}>
-                  <div id="pregnant-time">
-                    <TextField
-                      required
-                      type="number"
-                      id="week"
-                      name="week"
-                      label="weeks"
-                      sx={{ width: '40%', mr: '2%' }}
-                    />{' '}
-                    주
-                    <TextField
-                      required
-                      type="number"
-                      id="day"
-                      name="day"
-                      label="days"
-                      sx={{ width: '40%', mr: '2%', ml: '4%' }}
-                    />{' '}
-                    일
-                  </div>
-                </Grid>
+          {(week < 0 || day < 0 || day > 6) && (
+            <div className="errorMessageWrap">
+              <span>일수에 7보다 작은 값을 입력해주세요</span>
+            </div>
+          )}
+          {(!weekValid || !dayValid) && (
+            <div className="errorMessageWrap">
+              <span>임신 주차를 입력해주세요.</span>
+            </div>
+          )}
+        </div>
 
-                {/* 태명 */}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="bName"
-                    name="bName"
-                    label="태명"
-                    error={nameError !== '' || false}
-                  />
-                </Grid>
-                <formhelpertext>{bNameError}</formhelpertext>
+        {/* 태명  */}
+        <div className="b-name-input">
+          <span>태명</span>
+          <input type="text" placeholder="name" value={b_name} onChange={handleBName} required></input>
+          <div className="errorMessageWrap">
+            {!bNameValid && b_name.length > 0 && <span>올바른 태명을 입력해주세요.</span>}
+          </div>
+        </div>
 
-                {/* 영양제 */}
-                {supplements.map(supplement => (
-                  <Grid item xs={12} key={supplement.id}>
-                    <Grid container alignItems="center">
-                      <TextField
-                        required
-                        id={`supplement_${supplement.id}`}
-                        name={`supplement_${supplement.id}`}
-                        label={`영양제 ${supplement.id}`}
-                        error={false}
-                        sx={{ width: '91%' }}
-                      />
-                      <IconButton
-                        color="secondary"
-                        onClick={() => handleRemoveSupplement(supplement.id)}
-                        aria-label="remove supplement">
-                        <BsTrash size={'18px'} />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-                ))}
-                <formhelpertext>{supplementError}</formhelpertext>
-              </Grid>
+        {/* 영양제  */}
+        <div className={`supplements-input ${supplements.length === 1 ? 'single-item' : ''}`}>
+          <span>영양제</span>
+          {supplements.map((supplement, index) => (
+            <div key={supplement.id} className="supplements-item">
+              <input
+                type="text"
+                placeholder="supplements"
+                value={supplement.name}
+                onChange={e => handleSupplements(index, e)}
+                required
+              />
+              {supplements.length > 1 && (
+                <button onClick={() => handleRemoveSupplement(supplement.id)}>
+                  <BsTrash size={'18px'} />
+                </button>
+              )}
+            </div>
+          ))}
+          {(!supplementsValid ||
+            supplements.length === 0 ||
+            supplements.some(supplement => supplement.name.trim() === '')) && (
+            <div className="errorMessageWrap">
+              <span>영양제를 최소 1개 입력해주세요.</span>
+            </div>
+          )}
+        </div>
+      </form>
+      {/* 영양제 추가 버튼  */}
+      <button onClick={handleAddSupplement} className="add-supplements">
+        + supplements
+      </button>
 
-              {/* 영양제 추가 버튼  */}
-              <Button
-                onClick={handleAddSupplement}
-                sx={{
-                  alignSelf: 'center',
-                  border: '1px solid #a8a8a8',
-                  borderRadius: '50px',
-                  width: '180px',
-                  backgroundColor: '#FFF7F8',
-                  mt: '7%',
-                  color: '#7b7b7b',
-                  '&:hover': {
-                    backgroundColor: '#FCC8D1',
-                  },
-                }}>
-                + supplements
-              </Button>
-              {/* <span>{joinMessage}</span> */}
-              {/* 가입 완료하기 버튼 */}
-              <Button
-                onClick={handleSignupBtn}
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 5,
-                  mb: 8,
-                  backgroundColor: buttonColor,
-                  '&:hover': {
-                    backgroundColor: '#D14D72', // 마우스 호버 시의 배경 색상 변경
-                  },
-                }}
-                size="large"
-                id="join-finish">
-                가입 완료하기
-              </Button>
-            </FormControl>
-            <formhelpertext>{registerError}</formhelpertext>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+      {/* 가입이 가능한지에 따라 텍스트 다르게  */}
+      {(!emailValid ||
+        !passwordValid ||
+        !nameValid ||
+        !bNameValid ||
+        !rePasswordValid ||
+        !weekValid ||
+        !dayValid ||
+        !supplementsValid) && (
+        <div className="joinErrorMessageWrap">
+          <span style={{ color: 'red' }}>모든 정보를 확인해주세요.</span>
+        </div>
+      )}
+      {emailValid &&
+        passwordValid &&
+        nameValid &&
+        bNameValid &&
+        rePasswordValid &&
+        weekValid &&
+        dayValid &&
+        supplementsValid && (
+          <div className="joinSuccessMessageWrap">
+            <span>가입이 가능합니다!</span>
+          </div>
+        )}
+
+      {/* 가입 완료 버튼  */}
+      <button onClick={handleSignupBtn} className="join-finish">
+        가입 완료하기
+      </button>
+    </div>
   );
-};
-export default Register;
+}

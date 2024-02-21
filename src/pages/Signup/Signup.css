@@ -1,46 +1,312 @@
-.banner {
-  /* background-color: lightblue; */
+/* 뒤로 가기 버튼, 회원가입 h3 */
+.container {
+  /* background-color: lightgoldenrodyellow; */
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  /* background-color: lightcoral; */
   width: 100%;
   display: flex;
   height: 10vh;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 1vh;
 }
-
-.banner .back-btn {
+header .back-btn {
+  position: absolute;
+  left: 0%;
   background: none;
   border: none;
   cursor: pointer;
   order: -1;
   font-size: 1.5em;
-  align-self: center;
 }
-/* 식단 기록하기 */
-.banner h3 {
-  /* background-color: lightcoral; */
+
+header h3 {
+  /* background-color: lightcyan; */
   font-size: 1.2em;
   text-align: center;
   flex-grow: 1;
-  font-weight: 400;
+  font-weight: bold;
   margin: 0;
 }
 
-.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
-  font-size: 0.9rem;
+/* 입력 공간  */
+.input {
+  /* background-color: lightblue; */
+  font-family: 'Noto Sans KR', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  width: 15rem;
+  /* @@ -28,82 +27,103 @@ */
 }
 
-.MuiFormControl-rootMuiFormControl-fullWidthMuiTextField-rootcss-wb57ya-MuiFormControl-root-MuiTextField-root {
-  border-radius: 20px;
+/*이메일*/
+.email-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vh;
+}
+.email-input .errorMessageWrap span {
+  color: #d14d72;
+  font-size: 0.7rem;
+}
+.email-input span {
+  font-size: 0.8rem;
+  color: #333d42;
+  margin-bottom: 0.5em;
+  margin-left: 0.8em;
+}
+.email-input input {
+  height: 4.5vh;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.email-input input:focus {
+  outline: none;
 }
 
-/* 잘못 입력했을 때 */
-formhelpertext {
-  margin-left: 2vw;
-  color: red;
+/* 비밀번호  */
+.password-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vh;
+}
+.password-input .errorMessageWrap span {
+  color: #d14d72;
+  font-size: 0.7rem;
+}
+.password-input span {
+  font-size: 0.8rem;
+  color: #333d42;
+  margin-bottom: 0.5em;
+  margin-left: 0.8em;
+}
+.password-input input {
+  height: 4.5vh;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.password-input input:focus {
+  outline: none;
 }
 
-/* 임신 주일  */
-#pregnant-time {
+/* 비밀번호 확인  */
+.password-check-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vh;
+}
+.password-check-input .errorMessageWrap span {
+  color: #d14d72;
+  font-size: 0.7rem;
+}
+.password-check-input span {
+  font-size: 0.8rem;
+  color: #333d42;
+  margin-bottom: 0.5em;
+  margin-left: 0.8em;
+}
+.password-check-input input {
+  height: 4.5vh;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.password-check-input input:focus {
+  outline: none;
+}
+
+/* 이름 */
+.name-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vh;
+}
+.name-input .errorMessageWrap span {
+  color: #d14d72;
+  font-size: 0.7rem;
+}
+.name-input span {
+  font-size: 0.8rem;
+  color: #333d42;
+  margin-bottom: 0.5em;
+  margin-left: 0.8em;
+}
+.name-input input {
+  height: 4.5vh;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.name-input input:focus {
+  outline: none;
+}
+
+/* 임신 주차  */
+.pregnancy-time {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vh;
+}
+.pregnancy-time .pregnancy-time-container {
   display: flex;
   align-items: center;
+}
+.pregnancy-time .errorMessageWrap span {
+  color: #d14d72;
+  font-size: 0.7rem;
+}
+.pregnancy-time .pregnancy-time-container span {
+  margin-bottom: 0;
+}
+.pregnancy-time span {
+  font-size: 0.8rem;
+  color: #333d42;
+  margin: 0 0.8em 0.5em 0.4em;
+}
+.pregnancy-time input {
+  height: 4.5vh;
+  width: 24vw;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.pregnancy-time input:focus {
+  outline: none;
+}
+
+/* 태명  */
+
+.b-name-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vh;
+}
+.b-name-input .errorMessageWrap span {
+  color: #d14d72;
+  font-size: 0.7rem;
+}
+.b-name-input span {
+  font-size: 0.8rem;
+  color: #333d42;
+  margin-bottom: 0.5em;
+  margin-left: 0.8em;
+}
+.b-name-input input {
+  height: 4.5vh;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.b-name-input input:focus {
+  outline: none;
+}
+
+/* 영양제  */
+.supplements-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vh;
+}
+.supplements-input .errorMessageWrap span {
+  color: #d14d72;
+  font-size: 0.7rem;
+}
+.supplements-input span {
+  font-size: 0.8rem;
+  color: #333d42;
+  margin-bottom: 0.5em;
+  margin-left: 0.8em;
+}
+.supplements-input .supplements-item {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  /* background-color: lightcoral; */
+}
+.supplements-input input {
+  width: 90%;
+  height: 4.5vh;
+  background-color: #fff7f8;
+  border: 1px solid #333d42;
+  padding: 1rem 0 1rem 0.6rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-bottom: 2%;
+}
+.supplements-input input:focus {
+  outline: none;
+}
+
+.supplements-input button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 1%;
+}
+
+/* 영양제가 한 개만 있을 때는 input 칸이 100%이게  */
+.supplements-input.single-item .supplements-item input {
+  width: 100%;
+}
+
+/* 영양제 추가 버튼  */
+.add-supplements {
+  align-self: center;
+  border: 1px solid #a8a8a8;
+  border-radius: 50px;
+  width: 180px;
+  background-color: #fff7f8;
+  padding: 0.5vh;
+  color: #7b7b7b;
+}
+
+/* 가입 가능  */
+.joinErrorMessageWrap {
+  margin-top: 2vh;
+  font-size: 11px;
+}
+
+/* 가입 불가능  */
+.joinSuccessMessageWrap {
+  margin-top: 2vh;
+  font-size: 11px;
+}
+
+/* 가입 완료 버튼  */
+.join-finish {
+  width: 70%;
+  margin-top: 1vh;
+  padding: 1vh 0;
+  background-color: #d14d72;
+  border-radius: 50px;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.join-finish:hover {
+  background-color: #fcc8d1;
 }
