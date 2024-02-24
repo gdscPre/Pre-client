@@ -1,9 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import './Main.css';
-import { HiArrowRight } from 'react-icons/hi2';
-import { PiPillBold } from 'react-icons/pi';
-import { useNavigate } from 'react-router-dom';
-import { getMainPage } from '../../apis/mainpage';
+import { HiArrowRight } from "react-icons/hi2";
+import { PiPillBold } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
+import { getMainPage } from "../../apis/mainpage";
+
+import { showSupplement } from '../../apis/showSupplement';
+import { supplementCheck } from '../../apis/supplementCheck';
+import Footer from "../Footer/Footer";
+import * as FooterFunction from '../Footer/Footer.js';
+
+const checkedImg = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbMDcVS%2FbtsFesDRFRa%2FG3PKdPPWFXIEak7lqHjjJ1%2Fimg.png';
+const unCheckedImg = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdvuMH7%2FbtsFfbV7M7h%2Fz2arzmw2H32N69JtCXtLKK%2Fimg.png';
+
+const activePill = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHtGpH%2FbtsFjIdx183%2FrDBkUWGcDI6FVkN2cTQOJ1%2Fimg.png';
+const unactivePill = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHkaIH%2FbtsFiumlLe5%2FkOEEkUuRZj4Dfu7n0UUtH0%2Fimg.png';
+
 
 export default function Main() {
   const navigate = useNavigate();
@@ -16,32 +28,51 @@ export default function Main() {
   const day = today.getDate();
 
   const [data, setData] = useState();
+  const [supplementData, setSupplementData] = useState([]);
   const [loading, setLoading] = useState(true);
   const supplementList = ['약1', '약2', '약3', '약4', '약5'];
 
   const formattedDate = `${year}년 ${month}월 
   ${day}일`;
+  const alldrunkText = "오늘 먹을 영양제를 다 드셨습니다! :)";
+  let notDrunk = 0;
 
   useEffect(() => {
-    getMainPage().then(res => {
+    getMainPage().then((res) => {
       setData(res);
       setLoading(false);
     });
+    showSupplement().then((res) => {
+      setSupplementData(res);
+      
+    });
   }, []);
 
-  if (loading) return <div className="loading-state">로딩중...</div>;
+  supplementData.forEach(element => {
+    if(element._checked == false) notDrunk++;
+  })
+
+
+  if(loading) return <div className="loading-state">로딩중...</div>;
+
+
+
 
   const onClickAnalysisBtn = () => {
-    navigate('/diet/analysis');
+    navigate("/diet/analysis");
   };
 
   const onClickRegisterNutritionBtn = () => {
-    navigate('/diet/list');
+    navigate("/diet/list");
   };
 
   const onClickSupplementsBtn = () => {
-    navigate('/supplement');
+    navigate("/supplement");
   };
+
+
+
+
 
   return (
     <div className="container">
@@ -54,20 +85,16 @@ export default function Main() {
             <div id="name">{data?.b_name} </div>
             <div className="">만나기까지</div>
           </div>
-
+          
           <div className="d-day-date">{data?.d_day}일</div>
-          <span>
-            {data?.week}주 {data?.day}일째
-          </span>
+          <span>{data?.week}주 {data?.day}일째</span>
         </div>
         <div className="baby-img"></div>
       </div>
       <div className="diet-analysis">
         <div className="analysis">
           <span>식단 분석</span>
-          <button onClick={onClickAnalysisBtn}>
-            <HiArrowRight />
-          </button>
+          <button onClick={onClickAnalysisBtn}><HiArrowRight /></button>
         </div>
         <button onClick={onClickRegisterNutritionBtn} id="record-nutrition-btn">
           <span>식단 기록하기</span>
@@ -77,56 +104,31 @@ export default function Main() {
       <div className="nutritional-supplements">
         <div className="supplements-top">
           <span>영양제</span>
-          <button onClick={onClickSupplementsBtn}>
-            <HiArrowRight />
-          </button>
+          <button onClick={onClickSupplementsBtn}><HiArrowRight /></button>
         </div>
         <div className="nutritional-status">
           <div className="status-remind">
-            <span>오늘 아직 안 먹은 영양제가 2개 있어요!</span>
+            <span>{notDrunk === 0 ? alldrunkText : `오늘 아직 안 먹은 영양제가 ${notDrunk}개 있어요!`}</span>
           </div>
           <div className="check-list">
-            <div className={'pharm pharm-1'}>
-              <div className="pharm-box">
-                <PiPillBold className="pillImage" />
-                <span>{supplementList[0]}</span>
+            {supplementData.map((supplement, index) => (
+              <div key={index} className={'pharm'}>
+                <div className="pharm-box">
+                  <img src={supplement._checked ? activePill : unactivePill} className="pillImage" />             
+                  <span className={supplement._checked ? "supplement-name active" : "supplement-name"}>{supplement.supplement_name}</span>
+                </div>  
+                <button>
+                  <img src={supplement._checked ? checkedImg : unCheckedImg} alt="" />
+                </button>
               </div>
-              <button>✔</button>
-            </div>
-            <div className="pharm pharm-2">
-              <div className="pharm-box">
-                <PiPillBold className="pillImage" />
-                <span>{supplementList[1]}</span>
-              </div>
-              <button>✔</button>
-            </div>
-            <div className="pharm pharm-3">
-              <div className="pharm-box">
-                <PiPillBold className="pillImage" />
-                <span>{supplementList[2]}</span>
-              </div>
-              <button>✔</button>
-            </div>
-            <div className="pharm pharm-4">
-              <div className="pharm-box">
-                <PiPillBold className="pillImage" />
-                <span>{supplementList[3]}</span>
-              </div>
-              <button>✔</button>
-            </div>
-            <div className="pharm pharm-5">
-              <div className="pharm-box">
-                <PiPillBold className="pillImage" />
-                <span>{supplementList[4]}</span>
-              </div>
-              <button>✔</button>
-            </div>
+            ))}
           </div>
         </div>
       </div>
       <div className="tips-for-pregnants">
         <h3>임신 {data?.week}주 Tips</h3>
       </div>
+      <Footer className="main"/>
     </div>
   );
 }

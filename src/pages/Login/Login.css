@@ -8,8 +8,6 @@
   flex-direction: column;
   align-items: center;
 }
-
-/* 로고  */
 .container #logo {
   margin: 10vh auto 8vh auto;
   width: 50vw;
@@ -20,14 +18,13 @@
   font-optical-sizing: auto;
   font-weight: 100;
   font-style: normal;
-  /* @@ -28,82 +27,103 @@ */
-  width: 100rem;
 }
 
 .email-input {
   display: flex;
   flex-direction: column;
-  margin-bottom: 2vh;
+  margin-bottom: 3vh;
+  width: 16rem;
 }
 .email-input .errorMessageWrap span {
   color: #d14d72;
@@ -83,15 +80,9 @@
 /* 로그인, 회원가입 버튼  */
 
 .button {
-  margin-top: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1.2rem;
-}
-
-.button button {
-  width: 14rem;
 }
 #login-button {
   color: #fff;

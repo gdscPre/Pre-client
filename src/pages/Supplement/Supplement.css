@@ -68,14 +68,13 @@
   padding: 0vw 5vw;
   cursor: pointer;
 }
-.supplement-box>svg {
+.supplement-box>img {
   margin-right: 3vw;
+  width: 10vw;
+  max-width: 60px;
 }
 .supplement-list .selected-box {
   background-color: #FEE7EB;
-}
-.selected-box>svg {
-  color: #E17593; 
 }
 .selected-box>span {
   color: #E17593;

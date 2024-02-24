@@ -1,0 +1,21 @@
+.footer-box { 
+  display: flex;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 0vw 2vw;
+
+}
+.footer-box>div {
+  width: 25vw;
+  padding: 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.footer-box>div>img {
+  width: 8vw;
+  max-width: 50px;
+
+}
+

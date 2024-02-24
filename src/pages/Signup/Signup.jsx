@@ -4,6 +4,7 @@ import { GoArrowLeft } from 'react-icons/go';
 import { BsTrash } from 'react-icons/bs';
 import { signUp } from '../../apis/signUp';
 import './Signup.css';
+import axios from 'axios';
 
 export default function Join() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function Join() {
   const [rePassword, setRePassword] = useState('');
   const [week, setWeek] = useState(0);
   const [day, setDay] = useState(0);
-  const [supplements, setSupplements] = useState([{ id: 1, name: '' }]);
+  const [supplements, setSupplements] = useState([]);
 
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
@@ -79,20 +80,12 @@ export default function Join() {
   // 태명
   const handleBName = e => {
     setBName(e.target.value);
-    const regex = /^[가-힣a-zA-Z\s]+$/;
-    setBNameValid(regex.test(e.target.value));
+
   };
 
   //영양제
   const handleSupplements = (index, e) => {
-    const updatedSupplements = [...supplements];
-    updatedSupplements[index].name = e.target.value;
-    setSupplements(updatedSupplements);
 
-    // 각각의 영양제에 대한 유효성 검사
-    const regex = /^[가-힣a-zA-Z\s]+$/;
-    const isValid = updatedSupplements.every(supplement => regex.test(supplement.name));
-    setSupplementsValid(isValid);
   };
 
   useEffect(() => {
@@ -116,31 +109,14 @@ export default function Join() {
   //   setChecked(event.target.checked);
   // };
 
-  const onhandlePost = async data => {
-    const { email, name, password } = data;
-    const postData = { email, name, password };
-
-    // post
-    await axios
-      .post('/member/join', postData)
-      .then(response => {
-        History.push('/login');
-      })
-      .catch(err => {
-        console.log(err);
-        setJoinMessage('회원가입에 실패하였습니다. 모든 정보를 확인해주세요!');
-      });
-  };
-
   //뒤로 가기
   const handleBackBtn = () => {
-    navigate(-1);
+    navigate("users/login");
   };
 
   // 영양제 추가
   const handleAddSupplement = () => {
-    const newSupplement = { id: supplements.length + 1, name: ' ' };
-    setSupplements([...supplements, newSupplement]);
+    // setSupplements([...supplements, newSupplement]);
   };
   // 영양제 삭제
   const handleRemoveSupplement = id => {
@@ -152,6 +128,7 @@ export default function Join() {
 
   const handleSignupBtn = async () => {
     await signUp(email, name, password, rePassword, week, day, b_name, supplements);
+    navigate("/main");
   };
 
   return (

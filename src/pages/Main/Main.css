@@ -147,6 +147,9 @@ body {
 .nutritional-status .status-remind {
   margin-bottom: 1vh;
 }
+.check-list {
+  overflow: scroll;
+}
 .check-list .pharm {
   display: flex;
   align-items: center;
@@ -165,10 +168,14 @@ body {
   border-radius: 10px;
 }
 .pharm-box .pillImage {
-  font-size: 1.8em;
+  width: 6vw;
+  max-width: 34px;
 }
-.pharm-box span {
+.pharm-box .supplement-name {
   margin-left: 2vw;
+}
+.pharm-box .active {
+  color: #FFA8B9;
 }
 .pharm button {
   cursor: pointer;
@@ -177,15 +184,17 @@ body {
   height: 8vw;
   max-width: 40px;
   max-height: 40px;
-  background-color: #FFA8B9;
   border: none;
   outline: none;
   font-size: 1.5em;
   border-radius: 5px;
-  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+}
+.pharm button>img {
+  width: 100%;
 }
 
 .button-clicked .pharm-box {
@@ -194,6 +203,10 @@ body {
 
 .button-clicked .pharm button {
   visibility: hidden; /* Hide the button */
+
+}
+.button-clicked .pharm button>img { 
+  background-size: contain;
 }
 
 .container .tips-for-pregnants {

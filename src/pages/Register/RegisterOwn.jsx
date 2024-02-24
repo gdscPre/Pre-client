@@ -4,6 +4,7 @@ import './RegisterOwn.css';
 import { useNavigate } from 'react-router-dom';
 import { foodRecord } from '../../apis/foodRecord';
 
+
 export default function RegisterOwn() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
@@ -34,7 +35,7 @@ export default function RegisterOwn() {
 
   const handleBackBtn = () => {
     navigate(-1);
-  };
+  }
 
   const handleRegisterBtn = async () => {
     const date = new Date().toISOString(); // 현재 날짜와 시간을 가져옵니다
@@ -44,9 +45,9 @@ export default function RegisterOwn() {
   }
 
   return (
-    <div className="container">
+    <div className='container'>
       <div className="banner">
-        <button onClick={handleBackBtn} className="back-btn">
+        <button onClick={handleBackBtn} className='back-btn'>
           <GoArrowLeft />
         </button>
         <h3>식단 등록하기</h3>
@@ -76,5 +77,5 @@ export default function RegisterOwn() {
         <span>등록하기</span>
       </button>
     </div>
-  );
+  )
 }
