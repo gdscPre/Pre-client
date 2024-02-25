@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoArrowLeft } from 'react-icons/go';
 import { BsTrash } from 'react-icons/bs';
@@ -16,27 +16,30 @@ export default function Join() {
   const [week, setWeek] = useState(0);
   const [day, setDay] = useState(0);
   const [supplements, setSupplements] = useState([]);
-
-  const [emailValid, setEmailValid] = useState(false);
-  const [passwordValid, setPasswordValid] = useState(false);
-  const [nameValid, setNameValid] = useState(false);
-  const [bNameValid, setBNameValid] = useState(false);
-  const [rePasswordValid, setRePasswordValid] = useState(false);
-  const [weekValid, setWeekValid] = useState(false);
-  const [dayValid, setDayValid] = useState(false);
-  const [supplementsValid, setSupplementsValid] = useState(false);
+  const [sequence, setSequence] = useState(null);
+  let emailValid = false;
+  let passwordValid = false;
+  let nameValid = false;
+  let bNameValid = false;
+  let rePasswordValid = false;
+  let weekValid = false;
+  let dayValid = false;
+  let supplementsValid = true;
 
   const [notAllow, setNotAllow] = useState(true);
-
+  
+  const refSupplement = useRef();
+  let finSupplements = [];
+  const deleteImg = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FEKSSq%2FbtsFeQLBicE%2FpGk2QkyrCJrOtNkEkGcgSK%2Fimg.png';
   //이메일
   const handleEmail = e => {
     setEmail(e.target.value);
     const regex =
       /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     if (regex.test(email)) {
-      setEmailValid(true);
+      emailValid = true;
     } else {
-      setEmailValid(false);
+      emailValid = false;
     }
   };
 
@@ -44,37 +47,29 @@ export default function Join() {
   const handlePassword = e => {
     setPassword(e.target.value);
     const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    setPasswordValid(regex.test(e.target.value));
+    passwordValid = regex.test(e.target.value);
   };
 
   //비밀번호 확인
   const handleRePassword = e => {
     setRePassword(e.target.value);
-    setRePasswordValid(password === e.target.value);
+    rePasswordValid = password === e.target.value;
   };
 
   //이름
   const handleName = e => {
     setName(e.target.value);
     const regex = /^[가-힣a-zA-Z\s]+$/;
-    setNameValid(regex.test(e.target.value));
+    nameValid = regex.test(e.target.value);
   };
 
   // 임신 주차
   const handleWeek = e => {
-    const value = parseInt(e.target.value, 10);
-    setWeek(value);
-
-    // 숫자가 양수인지 확인
-    setWeekValid(!isNaN(value) && value >= 0);
+    setWeek(e.target.value);
   };
 
   const handleDay = e => {
-    const value = parseInt(e.target.value, 10);
-    setDay(value);
-
-    // 숫자가 양수인지 확인
-    setDayValid(!isNaN(value) && value >= 0);
+    setDay(e.target.value);
   };
 
   // 태명
@@ -84,9 +79,8 @@ export default function Join() {
   };
 
   //영양제
-  const handleSupplements = (index, e) => {
-
-  };
+  if(supplements.length === 0) supplementsValid = false; 
+  else supplementsValid = true;
 
   useEffect(() => {
     if (
@@ -115,21 +109,57 @@ export default function Join() {
   };
 
   // 영양제 추가
-  const handleAddSupplement = () => {
-    // setSupplements([...supplements, newSupplement]);
+  const handleAddSupplement = (item) => {
+    if(sequence === null) {
+      return
+    }
+    let supple = [...supplements];
+    supple.push({id:sequence+1,text:item});
+
+    window.localStorage.setItem("supplements", JSON.stringify(supple));
+    window.localStorage.setItem("sequence", String(sequence+1));
+
+    setSupplements(supple);
+    setSequence(sequence+1);
+    refSupplement.current.value=''
   };
   // 영양제 삭제
-  const handleRemoveSupplement = id => {
-    if (supplements.length > 1) {
-      const updatedSupplements = supplements.filter(supplement => supplement.id !== id);
-      setSupplements(updatedSupplements);
-    }
+  const handleRemoveSupplement = (id) => {
+   let supple = [...supplements];
+   supple = supple.filter((val)=>val.id !== id);
+
+   window.localStorage.setItem("supplements", JSON.stringify(supple));
+   setSupplements(supple);
+
   };
 
   const handleSignupBtn = async () => {
-    await signUp(email, name, password, rePassword, week, day, b_name, supplements);
-    navigate("/main");
+    supplements.forEach(element => {
+      console.log(element.text);
+      finSupplements.push(String(element.text));
+      console.log(finSupplements);
+    });
+    await signUp(email, password, name, week, day, b_name, finSupplements);
+    navigate("/users/login");
   };
+
+  useEffect(() => {
+    let sequence = window.localStorage.getItem("sequence");
+    if(sequence === null) {
+      window.localStorage.setItem("sequence", "0");
+      sequence = 0;
+    }
+    const handleSetInit = () => {
+      window.localStorage.setItem("supplements", "[]");
+      return "[]";
+    }
+    let supple = JSON.parse(window.localStorage.getItem("supplements")??handleSetInit());
+
+    setSupplements(supple);
+    setSequence(Number(sequence));
+  }, [])
+
+  console.log(supplements);
 
   return (
     <div className="container">
@@ -184,16 +214,6 @@ export default function Join() {
             <span>일</span>
           </div>
 
-          {(week < 0 || day < 0 || day > 6) && (
-            <div className="errorMessageWrap">
-              <span>일수에 7보다 작은 값을 입력해주세요</span>
-            </div>
-          )}
-          {(!weekValid || !dayValid) && (
-            <div className="errorMessageWrap">
-              <span>임신 주차를 입력해주세요.</span>
-            </div>
-          )}
         </div>
 
         {/* 태명  */}
@@ -201,42 +221,40 @@ export default function Join() {
           <span>태명</span>
           <input type="text" placeholder="name" value={b_name} onChange={handleBName} required></input>
           <div className="errorMessageWrap">
-            {!bNameValid && b_name.length > 0 && <span>올바른 태명을 입력해주세요.</span>}
+            {!bNameValid && b_name.length <= 0 && <span>올바른 태명을 입력해주세요.</span>}
           </div>
         </div>
 
         {/* 영양제  */}
-        <div className={`supplements-input ${supplements.length === 1 ? 'single-item' : ''}`}>
+        <div className={`supplements-input`}>
           <span>영양제</span>
-          {supplements.map((supplement, index) => (
-            <div key={supplement.id} className="supplements-item">
+            <div className="supplements-item">
               <input
                 type="text"
                 placeholder="supplements"
-                value={supplement.name}
-                onChange={e => handleSupplements(index, e)}
+                ref={refSupplement}
                 required
               />
-              {supplements.length > 1 && (
-                <button onClick={() => handleRemoveSupplement(supplement.id)}>
-                  <BsTrash size={'18px'} />
-                </button>
+                    {/* 영양제 추가 버튼  */}
+            <button onClick={() => handleAddSupplement(refSupplement.current.value)} className="add-supplements">
+              + 추가
+            </button>
+            </div>
+            <div className="supplementList">
+              {supplements.map((val, idx) => 
+                <div className="suppleItem" key={idx}>
+                  <div className="item-box">
+                    <span>{val.text}</span>
+                  </div>
+                  <div className="delete-box" onClick={()=>handleRemoveSupplement(val.id)}>
+                    <img src={deleteImg} alt="" />
+                  </div>
+                </div>
               )}
             </div>
-          ))}
-          {(!supplementsValid ||
-            supplements.length === 0 ||
-            supplements.some(supplement => supplement.name.trim() === '')) && (
-            <div className="errorMessageWrap">
-              <span>영양제를 최소 1개 입력해주세요.</span>
-            </div>
-          )}
         </div>
       </form>
-      {/* 영양제 추가 버튼  */}
-      <button onClick={handleAddSupplement} className="add-supplements">
-        + supplements
-      </button>
+
 
       {/* 가입이 가능한지에 따라 텍스트 다르게  */}
       {(!emailValid ||

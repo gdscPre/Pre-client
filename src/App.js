@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Mypage from './pages/Mypage/Mypage';
 import Caution from './pages/Caution/Caution';
+import Modify from './pages/Modify/Modify';
 
 function App() {
 
@@ -32,6 +33,8 @@ function App() {
           <Route path='/users/mypage' element={<Mypage/>} />
           <Route path='/diet/record' element={<RegisterOwn />} />
           <Route path='/tip' element={<Caution />} />
+          <Route path='/users/modify' element={<Modify />} />
+
           <Route path='/*' element={<Login />} />
         </Routes>
 

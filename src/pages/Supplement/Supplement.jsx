@@ -56,6 +56,8 @@ export default function Supplement() {
     console.log(data.supplement_id);
     const checked = data._checked ? false : true;
     supplementCheck(data.supplement_id, date, checked);
+    window.location.replace("/main");
+
   }
 
 

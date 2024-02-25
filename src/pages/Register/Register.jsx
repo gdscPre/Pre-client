@@ -14,15 +14,20 @@ export default function Register() {
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(true);
 
   const [selectedFoods, setSelectedFoods] = useState([]);
 
+  const filteredItems = data.filter((item) => 
+    item.desc_KOR.toLowerCase().includes(searchInput.toLowerCase()),
+  )
 
   useEffect(() => {
     foodList().then((res) => {
       setData(res);
       setLoading(false);
+      
     });
   }, []);
 
@@ -70,11 +75,11 @@ export default function Register() {
       </div>
       <div className="search-box">
         <CiSearch />
-        <input type="text" placeholder='무슨 음식을 드셨나요?' />
+        <input type="text" placeholder='무슨 음식을 드셨나요?' value={searchInput} onChange={(e) => setSearchInput(e.target.value)}/>
       </div>
 
       <div className="food-list">
-        {data.map((food, index) => (
+        {filteredItems.map((food, index) => (
           <div key={index} className={`food food-${index + 1}`}>
             <div className="food-top">
               <h3>{food.desc_KOR}</h3>

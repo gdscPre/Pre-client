@@ -69,10 +69,19 @@ body {
   
 }
 .d-dayBox .baby-img {
-  background-color: #fff;
   width: 27vw;
   height: 12vh;
   border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF;
+}
+.baby-img>img {
+  object-fit: contain;
+  width: 26vw;
+  height: 13vh;
 }
 
 .container .diet-analysis {

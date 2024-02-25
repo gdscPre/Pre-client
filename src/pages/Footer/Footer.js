@@ -36,7 +36,7 @@ export default function Footer() {
   }
 
   const handleMypage = () => {
-
+    navigate('/users/mypage');
   }
   return (
     <div className='footer-box'>

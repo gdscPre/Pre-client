@@ -16,6 +16,11 @@ const unCheckedImg = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fn
 const activePill = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHtGpH%2FbtsFjIdx183%2FrDBkUWGcDI6FVkN2cTQOJ1%2Fimg.png';
 const unactivePill = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHkaIH%2FbtsFiumlLe5%2FkOEEkUuRZj4Dfu7n0UUtH0%2Fimg.png';
 
+const firstTrimester = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbQRjk%2FbtsFgoHAx45%2F0LOiZIkDhxzgpKYXPdKP9K%2Fimg.jpg';
+const secondTrimester = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbrq6FZ%2FbtsFhoAgvGF%2Fw0dVeq8IBzpPbdNczKbA40%2Fimg.jpg';
+const thirdTrimester = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F2gyOK%2FbtsFiqj5XzU%2FTyrypygGEAKiktaKh0hc31%2Fimg.jpg';
+
+
 
 export default function Main() {
   const navigate = useNavigate();
@@ -70,7 +75,15 @@ export default function Main() {
     navigate("/supplement");
   };
 
-
+  let pregnancyImgsrc = firstTrimester;
+  if(data.week <= 13) {
+    pregnancyImgsrc = firstTrimester;
+  }
+  else if (data.week > 14 && data.week <= 28) {
+    pregnancyImgsrc = secondTrimester;
+  } else {
+    pregnancyImgsrc = thirdTrimester;
+  }
 
 
 
@@ -87,9 +100,11 @@ export default function Main() {
           </div>
           
           <div className="d-day-date">{data?.d_day}일</div>
-          <span>{data?.week}주 {data?.day}일째</span>
+          <span>({data?.week}주 {data?.day}일째)</span>
         </div>
-        <div className="baby-img"></div>
+        <div className="baby-img">
+          <img src={pregnancyImgsrc} alt="" />
+        </div>
       </div>
       <div className="diet-analysis">
         <div className="analysis">

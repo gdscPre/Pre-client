@@ -229,10 +229,7 @@ header h3 {
   flex-direction: column;
   margin-bottom: 2vh;
 }
-.supplements-input .errorMessageWrap span {
-  color: #d14d72;
-  font-size: 0.7rem;
-}
+
 .supplements-input span {
   font-size: 0.8rem;
   color: #333d42;
@@ -244,6 +241,7 @@ header h3 {
   flex-flow: row;
   align-items: center;
   /* background-color: lightcoral; */
+  margin-bottom: 1vh;
 }
 .supplements-input input {
   width: 90%;
@@ -258,25 +256,35 @@ header h3 {
 .supplements-input input:focus {
   outline: none;
 }
-
-.supplements-input button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-left: 1%;
+.supplementList {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  height: 10vh;
 }
+.supplementList .suppleItem {
+  display: flex;
+  margin-bottom: 1vh;
 
-/* 영양제가 한 개만 있을 때는 input 칸이 100%이게  */
-.supplements-input.single-item .supplements-item input {
-  width: 100%;
 }
-
+.suppleItem .item-box {
+  width: 60vw;
+  background-color: #fff7f8;
+  border: 1px solid #a8a8a8;
+  border-radius: 10px;
+}
+.suppleItem .delete-box {
+  width: 30%;
+}
+.delete-box>img{
+  width: 7vw;
+}
 /* 영양제 추가 버튼  */
 .add-supplements {
   align-self: center;
   border: 1px solid #a8a8a8;
   border-radius: 50px;
-  width: 180px;
+  width: 20vw;
   background-color: #fff7f8;
   padding: 0.5vh;
   color: #7b7b7b;

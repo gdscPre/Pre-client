@@ -67,6 +67,7 @@ body {
 .container .food-list {
   margin-top: 20px;
   border-radius: 5px;
+  height: 70vh;
   min-height: 100px;
   width: 100%;
   overflow: scroll;
@@ -89,6 +90,7 @@ body {
   justify-content:space-between;
   align-items: center;
   padding-left: 3vw;
+  height: 60%;
 }
 .food-top .plus-btn {
   font-size: 2em;

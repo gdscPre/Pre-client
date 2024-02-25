@@ -74,18 +74,18 @@ export default function Analysis() {
     carbState = '적당';
   }
 
-    // 단백질 상태 설정
-    let proteinState = '';
-    let proteinStateNum = 0;
-    if (sumProtein > appropriateProtein) {
-      proteinState = '과잉';
-      proteinStateNum = sumProtein - appropriateProtein;
-    } else if (sumProtein < appropriateProtein) {
-      proteinState =  '부족';
-      proteinStateNum = appropriateProtein - sumProtein;
-    } else {
-      proteinState = '적당';
-    }
+  // 단백질 상태 설정
+  let proteinState = '';
+  let proteinStateNum = 0;
+  if (sumProtein > appropriateProtein) {
+    proteinState = '과잉';
+    proteinStateNum = sumProtein - appropriateProtein;
+  } else if (sumProtein < appropriateProtein) {
+    proteinState =  '부족';
+    proteinStateNum = appropriateProtein - sumProtein;
+  } else {
+    proteinState = '적당';
+  }
 
   const handleBackBtn = () => {
     navigate(-1);

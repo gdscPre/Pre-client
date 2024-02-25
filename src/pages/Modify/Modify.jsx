@@ -1,14 +1,51 @@
 // 마이 페이지 수정
 
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import './Modify.css';
 import { Button, IconButton, TextField, Grid } from '@mui/material';
 import { BsTrash } from 'react-icons/bs';
-import InputAdornment from '@mui/material/InputAdornment';
+import { getMainPage } from '../../apis/mainpage';
+import { modifyInfo } from '../../apis/Modify';
+
 
 export default function Modify() {
+
+  const navigate = useNavigate();
+  const [data, setData] = useState();
+  // const [supplements, setSupplements] = useState([]);
+  const [week, setWeek] = useState(0);
+  const [day, setDay] = useState(0);
+  const [bName, setBname] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getMainPage().then((res) => {
+      setData(res);
+      setLoading(false);
+    });
+  }, []);
+
+  if(loading) return <div className="loading-state">로딩중...</div>;
+
+  const handleWeek = e => {
+    setWeek(e.target.value);
+  }
+
+  const handleDay = e => {
+    setDay(e.target.value);
+  }
+
+  const handleBname = e => {
+    setBname(e.target.value);
+    console.log(bName);
+  }
+
+  const handleModifyBtn = () => {
+    modifyInfo(bName, week, day);
+    navigate("/main");
+  }
   return (
     <div className="container">
       {/* <header>{user_name}님</header> */}
@@ -17,10 +54,10 @@ export default function Modify() {
       <div className="pregnant-time">
         <h2>임신 주차</h2>
         <div id="pregnant-time-container">
-          <input id="week" placeholder="14" type="number"></input>
+          <input onChange={handleWeek} id="week" placeholder={data.week} type="number" value={week} required></input>
           <h3>주</h3>
 
-          <input id="day" placeholder="5" type="number"></input>
+          <input onChange={handleDay} id="day" placeholder={data.day} type="number" value={day} required></input>
           <h3>일</h3>
         </div>
       </div>
@@ -28,66 +65,14 @@ export default function Modify() {
       {/* 태명  */}
       <div className="bName-container">
         <h2>태명</h2>
-        <input type="text" className="bName" placeholder="새싹이" />
+        <input onChange={handleBname} type="text" className="bName" placeholder={data.b_name} value={bName} required />
       </div>
 
-      {/* 영양제  */}
-      <div className="supplement-container">
-        <h2>영양제</h2>
-        {supplements.map(supplement => (
-          <Grid item xs={12} key={supplement.id}>
-            <TextField
-              // sx={{ backgroundColor: 'lightblue' }}
-              className="modify-supplement"
-              required
-              id={`supplement_${supplement.id}`}
-              name={`supplement_${supplement.id}`}
-              // label={`영양제 ${supplement.id}`}
-              placeholder={`영양제 ${supplement.id}`}
-              error={false}
-              fullWidth
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      color="secondary"
-                      onClick={() => handleRemoveSupplement(supplement.id)}
-                      aria-label="remove supplement">
-                      <BsTrash size={'18px'} />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              InputLabelProps={{
-                shrink: false, // 레이블이 위로 올라가지 않도록 설정
-              }}
-            />
-          </Grid>
-        ))}
-      </div>
 
-      {/* 영양제 추가 버튼  */}
-      <Button
-        onClick={handleAddSupplement}
-        sx={{
-          mt: 3,
-          alignSelf: 'center',
-          border: '1px solid #a8a8a8',
-          borderRadius: '50px',
-          width: '180px',
-          backgroundColor: '#FFF7F8',
-
-          height: '30px',
-          color: '#7b7b7b',
-          '&:hover': {
-            backgroundColor: '#FCC8D1',
-          },
-        }}>
-        + supplements
-      </Button>
 
       {/* 수정 완료 버튼  */}
       <Button
+        onClick={handleModifyBtn}
         id="modify-button"
         type="submit"
         fullWidth
