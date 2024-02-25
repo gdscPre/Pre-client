@@ -105,7 +105,7 @@ export default function Join() {
 
   //뒤로 가기
   const handleBackBtn = () => {
-    navigate("/users/login");
+    navigate(-1);
   };
 
   // 영양제 추가
