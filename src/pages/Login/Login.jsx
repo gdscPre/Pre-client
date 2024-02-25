@@ -49,10 +49,12 @@ export default function Login() {
 
   const onClickConfirmButton = async () => {
     const result = await login(email, pw);
+    console.log("로그인 되어야 하는데?");
     const { jwtAccessToken, jwtRefreshToken } = result;
     localStorage.setItem('access', jwtAccessToken);
     localStorage.setItem('refresh', jwtRefreshToken);
-    navigate("/main");
+    window.location.href = "/main";
+    // navigate("/main");
   };
 
   const onClickRegisterButton = () => {
